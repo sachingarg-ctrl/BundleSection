@@ -16,26 +16,24 @@
 >
   <div class="bundle-steps__inner">
     <div class="bundle-steps__left">
-
       {%- if section.blocks.size > 0 -%}
         {%- assign total_steps = section.blocks.size -%}
 
         <div class="bundle-steps__accordion-list">
-
           {%- for block in section.blocks -%}
             {%- assign step_collection = collections[block.settings.collection] -%}
 
             <!-- Step Label -->
             <div class="bundle-steps__step-label-wrapper">
-              <span class="bundle-steps__step-label-text">
-                STEP {{ forloop.index }} OF {{ total_steps }}
-              </span>
+              <span class="bundle-steps__step-label-text"> STEP {{ forloop.index }} OF {{ total_steps }} </span>
             </div>
 
             <!-- Accordion Item -->
             <details
               class="bundle-steps__accordion-item"
-              {% if forloop.first %}open{% endif %}
+              {% if forloop.first %}
+                open
+              {% endif %}
               {{ block.shopify_attributes }}
             >
               <summary class="bundle-steps__accordion-header">
@@ -53,9 +51,7 @@
 
               <div class="bundle-steps__accordion-body">
                 <div class="bundle-steps__card">
-
                   <div class="bundle-steps__card-body">
-
                     {%- if step_collection and step_collection.products_count > 0 -%}
                       <div class="bundle-steps__products-panel">
                         <div class="bundle-steps__products-grid">
@@ -63,7 +59,11 @@
                             <div class="bundle-steps__product-card">
                               <div class="bundle-steps__product-media">
                                 {%- if product.featured_image -%}
-                                  {{ product.featured_image | image_url: width: 400 | image_tag: loading: 'lazy', class: 'bundle-steps__product-image' }}
+                                  {{
+                                    product.featured_image
+                                    | image_url: width: 400
+                                    | image_tag: loading: 'lazy', class: 'bundle-steps__product-image'
+                                  }}
                                 {%- endif -%}
                               </div>
 
@@ -82,11 +82,8 @@
                         </div>
                       </div>
                     {%- else -%}
-                      <p class="bundle-steps__empty">
-                        Select a collection for this step to see its products here.
-                      </p>
+                      <p class="bundle-steps__empty">Select a collection for this step to see its products here.</p>
                     {%- endif -%}
-
                   </div>
 
                   <div class="bundle-steps__card-footer">
@@ -94,73 +91,106 @@
                       {{ block.settings.next_button_label | default: 'Next step' }}
                     </button>
                   </div>
-
                 </div>
               </div>
             </details>
           {%- endfor -%}
-
         </div>
       {%- else -%}
         <p class="bundle-steps__empty">Add blocks to configure your bundle steps.</p>
       {%- endif -%}
-
     </div>
     <div class="bundle-steps__right"></div>
   </div>
 </section>
 
 {% stylesheet %}
-.bundle-steps { background: #f4f6fb; }
-.bundle-steps__inner { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 3fr 2fr; gap: 24px; }
-.bundle-steps__left { display: flex; flex-direction: column; gap: 24px; }
+  .bundle-steps { background: #f4f6fb; }
+  .bundle-steps__inner { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 3fr 2fr; gap: 24px; }
+  .bundle-steps__left { display: flex; flex-direction: column; gap: 24px; }
 
-.bundle-steps__step-label-wrapper { text-align: center; margin-bottom: 12px; }
-.bundle-steps__step-label-text { font-size: 12px; font-weight: 600; color: #7b88a8; letter-spacing: 0.1em; text-transform: uppercase; }
+  .bundle-steps__step-label-wrapper { text-align: center; margin-bottom: 12px; }
+  .bundle-steps__step-label-text { font-size: 12px; font-weight: 600; color: #7b88a8; letter-spacing: 0.1em; text-transform: uppercase; }
 
-.bundle-steps__accordion-list { border-radius: 12px; overflow: hidden; border: 1px solid #dbe1f3; background: #fff; }
-.bundle-steps__accordion-item + .bundle-steps__accordion-item { border-top: 1px solid #e4e7f5; }
+  .bundle-steps__accordion-list { border-radius: 12px; overflow: hidden; border: 1px solid #dbe1f3; background: #fff; }
+  .bundle-steps__accordion-item + .bundle-steps__accordion-item { border-top: 1px solid #e4e7f5; }
 
-.bundle-steps__accordion-header { display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 12px 0; }
-.bundle-steps__accordion-header::-webkit-details-marker { display: none; }
+  .bundle-steps__accordion-header { display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 12px 0; }
+  .bundle-steps__accordion-header::-webkit-details-marker { display: none; }
 
-.bundle-steps__accordion-title-wrapper { display: flex; align-items: center; gap: 8px; background: #fff; padding: 0 12px; position: relative; z-index: 1; }
-.bundle-steps__accordion-title { font-size: 14px; font-weight: 600; margin: 0; color: #121933; }
-.bundle-steps__accordion-chevron { font-size: 16px; transition: transform 0.25s ease; }
+  .bundle-steps__accordion-title-wrapper { display: flex; align-items: center; gap: 8px; background: #fff; padding: 0 12px; position: relative; z-index: 1; }
+  .bundle-steps__accordion-title { font-size: 14px; font-weight: 600; margin: 0; color: #121933; }
+  .bundle-steps__accordion-chevron { font-size: 16px; transition: transform 0.25s ease; }
 
-.bundle-steps__accordion-item[open] .bundle-steps__accordion-chevron { transform: rotate(180deg); }
+  .bundle-steps__accordion-item[open] .bundle-steps__accordion-chevron { transform: rotate(180deg); }
 
-.bundle-steps__accordion-line { flex: 1; height: 1px; background: #dbe1f3; }
+  .bundle-steps__accordion-line { flex: 1; height: 1px; background: #dbe1f3; }
 
-.bundle-steps__accordion-body { padding: 16px; }
+  .bundle-steps__accordion-body { padding: 16px; }
 
-.bundle-steps__products-panel { background: #f5f7ff; border-radius: 20px; padding: 16px; }
-.bundle-steps__products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .bundle-steps__products-panel { background: #f5f7ff; border-radius: 20px; padding: 16px; }
+  .bundle-steps__products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
 
-.bundle-steps__product-card { background: #fff; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
-.bundle-steps__product-media { height: 120px; display: flex; align-items: center; justify-content: center; }
-.bundle-steps__product-image { max-width: 100%; max-height: 100%; object-fit: contain; }
-.bundle-steps__product-title { font-size: 14px; font-weight: 600; margin: 0; }
-.bundle-steps__product-description { font-size: 12px; color: #7b88a8; margin: 0; }
+  .bundle-steps__product-card { background: #fff; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+  .bundle-steps__product-media { height: 120px; display: flex; align-items: center; justify-content: center; }
+  .bundle-steps__product-image { max-width: 100%; max-height: 100%; object-fit: contain; }
+  .bundle-steps__product-title { font-size: 14px; font-weight: 600; margin: 0; }
+  .bundle-steps__product-description { font-size: 12px; color: #7b88a8; margin: 0; }
 
-.bundle-steps__primary-btn { border-radius: 999px; border: 1px solid #b8c2ff; background: #f5f7ff; color: #3657ff; padding: 10px 22px; cursor: pointer; }
+  .bundle-steps__primary-btn { border-radius: 999px; border: 1px solid #b8c2ff; background: #f5f7ff; color: #3657ff; padding: 10px 22px; cursor: pointer; }
 
-.bundle-steps__empty { padding: 16px; color: #7b88a8; text-align: center; }
+  .bundle-steps__empty { padding: 16px; color: #7b88a8; text-align: center; }
 
-@media(max-width:1024px) {
-  .bundle-steps__inner { grid-template-columns: 1fr; }
-  .bundle-steps__products-grid { grid-template-columns: repeat(2, 1fr); }
-}
+  @media(max-width:1024px) {
+    .bundle-steps__inner { grid-template-columns: 1fr; }
+    .bundle-steps__products-grid { grid-template-columns: repeat(2, 1fr); }
+  }
 {% endstylesheet %}
 
 {% schema %}
 {
   "name": "Bundle steps builder",
   "settings": [
-    { "type": "range", "id": "padding_top", "label": "Padding top", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40 },
-    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40 },
-    { "type": "range", "id": "margin_top", "label": "Margin top", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 0 },
-    { "type": "range", "id": "margin_bottom", "label": "Margin bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 0 }
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Margin top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Margin bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
   ],
   "blocks": [
     {
@@ -174,7 +204,7 @@
     }
   ],
   "presets": [
-    { "name": "Bundle steps builder", "blocks": [ { "type": "step" }, { "type": "step" }, { "type": "step" } ] }
+    { "name": "Bundle steps builder", "blocks": [{ "type": "step" }, { "type": "step" }, { "type": "step" }] }
   ]
 }
 {% endschema %}
