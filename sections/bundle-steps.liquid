@@ -25,6 +25,11 @@ assign margin_bottom = section.settings.margin_bottom | default: 0
           {%- for block in section.blocks -%}
             {%- assign step_collection = collections[block.settings.collection] -%}
 
+            <!-- Step label above accordion -->
+            <div class="bundle-steps__accordion-step-label">
+              STEP {{ forloop.index }} OF {{ total_steps }}
+            </div>
+
             <details
               class="bundle-steps__accordion-item"
               name="bundle-accordion"
@@ -34,13 +39,8 @@ assign margin_bottom = section.settings.margin_bottom | default: 0
               <summary class="bundle-steps__accordion-header">
 
                 <div class="bundle-steps__accordion-left">
-                  <div>
-                    <div class="bundle-steps__accordion-step-label">
-                      STEP {{ forloop.index }} OF {{ total_steps }}
-                    </div>
-                    <div class="bundle-steps__accordion-title">
-                      {{ block.settings.step_heading | default: 'Step heading' }}
-                    </div>
+                  <div class="bundle-steps__accordion-title">
+                    {{ block.settings.step_heading | default: 'Step heading' }}
                   </div>
                 </div>
 
@@ -174,7 +174,7 @@ assign margin_bottom = section.settings.margin_bottom | default: 0
     </div>
 
     <div class="bundle-steps__right">
-      <!-- Right side content intentionally left empty -->
+      <!-- Right side empty for now -->
     </div>
 
   </div>
@@ -211,6 +211,19 @@ assign margin_bottom = section.settings.margin_bottom | default: 0
   border-top: 1px solid #e4e7f5;
 }
 
+/* STEP LABEL outside accordion summary */
+.bundle-steps__accordion-step-label {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #a0aac6;
+  border-bottom: 1px solid #dbe1f3;
+  padding-bottom: 6px;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+/* Accordion header summary */
 .bundle-steps__accordion-header {
   padding: 14px 18px;
   display: flex;
@@ -221,17 +234,6 @@ assign margin_bottom = section.settings.margin_bottom | default: 0
 
 .bundle-steps__accordion-header::-webkit-details-marker {
   display: none;
-}
-
-.bundle-steps__accordion-step-label {
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #a0aac6;
-  border-bottom: 1px solid #dbe1f3;
-  padding-bottom: 4px;
-  margin-bottom: 6px;
-  font-weight: 600;
 }
 
 .bundle-steps__accordion-title {
@@ -255,14 +257,14 @@ assign margin_bottom = section.settings.margin_bottom | default: 0
   white-space: nowrap;
 }
 
-/* Show arrow down by default */
+/* Arrow down icon styling */
 .bundle-steps__accordion-chevron {
   transition: transform 0.25s ease;
   font-size: 18px;
   color: #3657ff;
 }
 
-/* When details is open */
+/* Rotate arrow when open */
 .bundle-steps__accordion-item[open] .bundle-steps__accordion-chevron {
   transform: rotate(180deg);
   color: #3657ff;
