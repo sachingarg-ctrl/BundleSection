@@ -144,7 +144,7 @@
                       </div>
 
                       <!-- Next button footer centered -->
-                      {% if block.settings.next_button_label %}
+                      {% if block.settings.next_button_label !=blank %}
                         <div class="bundle-steps__card-footer">
                           <button type="button" class="bundle-steps__primary-btn">
                             {{ block.settings.next_button_label | default: 'Next step' }}
