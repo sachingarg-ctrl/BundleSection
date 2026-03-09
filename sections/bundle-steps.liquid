@@ -25,107 +25,101 @@ assign margin_bottom = section.settings.margin_bottom | default: 0
           {%- for block in section.blocks -%}
             {%- assign step_collection = collections[block.settings.collection] -%}
 
+            <!-- Step label above accordion -->
+            <div class="bundle-steps__accordion-step-label">
+              STEP {{ forloop.index }} OF {{ total_steps }}
+            </div>
+
             <details
               class="bundle-steps__accordion-item"
               name="bundle-accordion"
               {% if forloop.first %}open{% endif %}
               {{ block.shopify_attributes }}
             >
+              <summary class="bundle-steps__accordion-header">
 
-              <!-- Wrapper div for entire block background -->
-              <div class="bundle-steps__accordion-wrapper">
-
-                <!-- Step label above accordion -->
-                <div class="bundle-steps__accordion-step-label">
-                  STEP {{ forloop.index }} OF {{ total_steps }}
+                <div class="bundle-steps__accordion-left">
+                  <div class="bundle-steps__accordion-title">
+                    {{ block.settings.step_heading | default: 'Step heading' }}
+                  </div>
                 </div>
 
-                <summary class="bundle-steps__accordion-header">
+                <div class="bundle-steps__accordion-right">
 
-                  <div class="bundle-steps__accordion-left">
-                    <div class="bundle-steps__accordion-title">
-                      {{ block.settings.step_heading | default: 'Step heading' }}
-                    </div>
-                  </div>
+                  <span class="bundle-steps__selected-count">
+                    <span class="bundle-steps__selected-count-value">0</span>
+                    <span>selected</span>
+                  </span>
 
-                  <div class="bundle-steps__accordion-right">
+                  <span class="bundle-steps__accordion-chevron">⌄</span>
 
-                    <span class="bundle-steps__selected-count">
-                      <span class="bundle-steps__selected-count-value">0</span>
-                      <span>selected</span>
-                    </span>
+                </div>
 
-                    <span class="bundle-steps__accordion-chevron">⌄</span>
+              </summary>
 
-                  </div>
+              <div class="bundle-steps__accordion-body">
 
-                </summary>
+                <div class="bundle-steps__card-body">
 
-                <div class="bundle-steps__accordion-body">
+                  {%- if step_collection and step_collection.products_count > 0 -%}
 
-                  <div class="bundle-steps__card-body">
+                    <div class="bundle-steps__products-panel">
 
-                    {%- if step_collection and step_collection.products_count > 0 -%}
+                      <div class="bundle-steps__products-grid">
 
-                      <div class="bundle-steps__products-panel">
+                        {%- for product in step_collection.products limit: 5 -%}
 
-                        <div class="bundle-steps__products-grid">
+                          <div class="bundle-steps__product-card">
 
-                          {%- for product in step_collection.products limit: 5 -%}
+                            <div class="bundle-steps__product-media">
 
-                            <div class="bundle-steps__product-card">
+                              {%- if product.featured_image -%}
+                                {{ product.featured_image
+                                  | image_url: width: 400
+                                  | image_tag:
+                                    loading: 'lazy',
+                                    class: 'bundle-steps__product-image'
+                                }}
+                              {%- endif -%}
 
-                              <div class="bundle-steps__product-media">
+                            </div>
 
-                                {%- if product.featured_image -%}
-                                  {{ product.featured_image
-                                    | image_url: width: 400
-                                    | image_tag:
-                                      loading: 'lazy',
-                                      class: 'bundle-steps__product-image'
-                                  }}
-                                {%- endif -%}
+                            <div class="bundle-steps__product-content">
 
+                              <h3 class="bundle-steps__product-title">
+                                {{ product.title }}
+                              </h3>
+
+                              {%- if product.description != blank -%}
+                                <p class="bundle-steps__product-description">
+                                  {{ product.description | strip_html | truncate: 80 }}
+                                </p>
+                              {%- endif -%}
+
+                              <div class="bundle-steps__product-options">
+                                <span class="bundle-steps__swatch bundle-steps__swatch--white"></span>
+                                <span class="bundle-steps__swatch bundle-steps__swatch--black"></span>
                               </div>
 
-                              <div class="bundle-steps__product-content">
+                              <div class="bundle-steps__product-footer">
 
-                                <h3 class="bundle-steps__product-title">
-                                  {{ product.title }}
-                                </h3>
-
-                                {%- if product.description != blank -%}
-                                  <p class="bundle-steps__product-description">
-                                    {{ product.description | strip_html | truncate: 80 }}
-                                  </p>
-                                {%- endif -%}
-
-                                <div class="bundle-steps__product-options">
-                                  <span class="bundle-steps__swatch bundle-steps__swatch--white"></span>
-                                  <span class="bundle-steps__swatch bundle-steps__swatch--black"></span>
+                                <div class="bundle-steps__qty-control">
+                                  <button type="button" class="bundle-steps__qty-btn">-</button>
+                                  <span class="bundle-steps__qty-value">0</span>
+                                  <button type="button" class="bundle-steps__qty-btn">+</button>
                                 </div>
 
-                                <div class="bundle-steps__product-footer">
+                                <div class="bundle-steps__price">
 
-                                  <div class="bundle-steps__qty-control">
-                                    <button type="button" class="bundle-steps__qty-btn">-</button>
-                                    <span class="bundle-steps__qty-value">0</span>
-                                    <button type="button" class="bundle-steps__qty-btn">+</button>
-                                  </div>
-
-                                  <div class="bundle-steps__price">
-
-                                    {%- if product.compare_at_price_max > product.price -%}
-                                      <span class="bundle-steps__compare-at">
-                                        {{ product.compare_at_price_max | money }}
-                                      </span>
-                                    {%- endif -%}
-
-                                    <span class="bundle-steps__final-price">
-                                      {{ product.price | money }}
+                                  {%- if product.compare_at_price_max > product.price -%}
+                                    <span class="bundle-steps__compare-at">
+                                      {{ product.compare_at_price_max | money }}
                                     </span>
+                                  {%- endif -%}
 
-                                  </div>
+                                  <span class="bundle-steps__final-price">
+                                    {{ product.price | money }}
+                                  </span>
 
                                 </div>
 
@@ -133,32 +127,32 @@ assign margin_bottom = section.settings.margin_bottom | default: 0
 
                             </div>
 
-                          {%- endfor -%}
+                          </div>
 
-                        </div>
-
-                        <!-- Next button footer centered -->
-                        <div class="bundle-steps__card-footer">
-                          <button type="button" class="bundle-steps__primary-btn">
-                            {{ block.settings.next_button_label | default: 'Next step' }}
-                          </button>
-                        </div>
+                        {%- endfor -%}
 
                       </div>
 
-                    {%- else -%}
+                      <!-- Next button footer centered -->
+                      <div class="bundle-steps__card-footer">
+                        <button type="button" class="bundle-steps__primary-btn">
+                          {{ block.settings.next_button_label | default: 'Next step' }}
+                        </button>
+                      </div>
 
-                      <p class="bundle-steps__empty">
-                        Select a collection for this step to see its products here.
-                      </p>
+                    </div>
 
-                    {%- endif -%}
+                  {%- else -%}
 
-                  </div>
+                    <p class="bundle-steps__empty">
+                      Select a collection for this step to see its products here.
+                    </p>
+
+                  {%- endif -%}
 
                 </div>
 
-              </div> <!-- End of wrapper -->
+              </div>
 
             </details>
 
@@ -215,6 +209,7 @@ assign margin_bottom = section.settings.margin_bottom | default: 0
   border-top: 1px solid #e4e7f5;
 }
 
+/* STEP LABEL outside accordion summary */
 .bundle-steps__accordion-step-label {
   font-size: 11px;
   letter-spacing: 0.1em;
@@ -224,12 +219,14 @@ assign margin_bottom = section.settings.margin_bottom | default: 0
   margin-bottom: 12px;
   font-weight: 600;
   border-bottom: 1px solid #c7cbd8;
+  /* background: #f5f7ff; */
 }
 
 details.bundle-steps__accordion-item {
   margin-bottom: 16px;
 }
 
+/* Accordion header summary */
 .bundle-steps__accordion-header {
   padding: 14px 18px;
   display: flex;
@@ -259,34 +256,32 @@ details.bundle-steps__accordion-item {
   user-select: none;
 }
 
+/* Hide selected count by default */
 .bundle-steps__selected-count {
   display: none;
   font-size: 14px;
   white-space: nowrap;
 }
 
+/* Arrow down icon styling */
 .bundle-steps__accordion-chevron {
   transition: transform 0.25s ease;
   font-size: 18px;
   color: #3657ff;
 }
 
+/* Rotate arrow when open */
 .bundle-steps__accordion-item[open] .bundle-steps__accordion-chevron {
   transform: rotate(180deg);
   color: #3657ff;
 }
 
+/* Show selected count and hide arrow when open */
 .bundle-steps__accordion-item[open] .bundle-steps__selected-count {
   display: inline-flex;
 }
 
-/* --- Background for entire block when open --- */
-.bundle-steps__accordion-item[open] .bundle-steps__accordion-wrapper {
-  background-color: #f5f7ff;
-  border-radius: 12px;
-  transition: background-color 0.3s ease;
-}
-
+/* Product panel styles */
 .bundle-steps__products-panel {
   background: #f5f7ff;
   border-radius: 20px;
@@ -358,8 +353,13 @@ details.bundle-steps__accordion-item {
   border: 1px solid #d0d6ec;
 }
 
-.bundle-steps__swatch--white { background: #fff; }
-.bundle-steps__swatch--black { background: #000; }
+.bundle-steps__swatch--white {
+  background: #fff;
+}
+
+.bundle-steps__swatch--black {
+  background: #000;
+}
 
 .bundle-steps__product-footer {
   display: flex;
@@ -442,8 +442,13 @@ details.bundle-steps__accordion-item {
 }
 
 @media (max-width: 1024px) {
-  .bundle-steps__inner { grid-template-columns: 1fr; }
-  .bundle-steps__products-grid { grid-template-columns: repeat(2, 1fr); }
+  .bundle-steps__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .bundle-steps__products-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 {% endstylesheet %}
@@ -452,24 +457,81 @@ details.bundle-steps__accordion-item {
 {
   "name": "Bundle steps builder",
   "settings": [
-    { "type": "range", "id": "padding_top", "label": "Padding top", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40 },
-    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40 },
-    { "type": "range", "id": "margin_top", "label": "Margin top", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 0 },
-    { "type": "range", "id": "margin_bottom", "label": "Margin bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 0 }
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Margin top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Margin bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
   ],
   "blocks": [
     {
       "type": "step",
       "name": "Step",
       "settings": [
-        { "type": "collection", "id": "collection", "label": "Collection" },
-        { "type": "text", "id": "step_heading", "label": "Step heading", "default": "Choose your products" },
-        { "type": "text", "id": "next_button_label", "label": "Next button label", "default": "Next step" }
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "step_heading",
+          "label": "Step heading",
+          "default": "Choose your products"
+        },
+        {
+          "type": "text",
+          "id": "next_button_label",
+          "label": "Next button label",
+          "default": "Next step"
+        }
       ]
     }
   ],
   "presets": [
-    { "name": "Bundle steps builder", "blocks": [ { "type": "step" }, { "type": "step" }, { "type": "step" } ] }
+    {
+      "name": "Bundle steps builder",
+      "blocks": [
+        { "type": "step" },
+        { "type": "step" },
+        { "type": "step" }
+      ]
+    }
   ]
 }
 {% endschema %}
