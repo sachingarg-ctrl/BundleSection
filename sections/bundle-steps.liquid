@@ -25,7 +25,12 @@
             {%- assign step_number = forloop.index -%}
             {%- assign step_collection = collections[block.settings.collection] -%}
 
-            <details class="bundle-steps__accordion-item"{% if forloop.first %} open{% endif %} {{ block.shopify_attributes }}>
+            <details
+              class="bundle-steps__accordion-item"
+              data-bundle-steps-group="{{ section.id }}"
+              {% if forloop.first %}open{% endif %}
+              {{ block.shopify_attributes }}
+            >
               <summary class="bundle-steps__accordion-header">
                 <div class="bundle-steps__accordion-left">
                   <div class="bundle-steps__step-circle">
@@ -58,6 +63,12 @@
                         <div class="bundle-steps__products-grid">
                           {%- for product in step_collection.products limit: 5 -%}
                             <div class="bundle-steps__product-card">
+                              {%- if product.compare_at_price_max > product.price -%}
+                                <div class="bundle-steps__product-badge">
+                                  {{ 'products.product.on_sale' | t | default: 'Save' }}
+                                </div>
+                              {%- endif -%}
+
                               <div class="bundle-steps__product-media">
                                 {%- if product.featured_image -%}
                                   {{ product.featured_image | image_url: width: 400 | image_tag: loading: 'lazy', class: 'bundle-steps__product-image' }}
@@ -186,6 +197,21 @@
       });
 
       updateStepTotal();
+    });
+
+    // Ensure only one accordion is open at a time
+    stepItems.forEach(function (stepItem) {
+      stepItem.addEventListener('toggle', function () {
+        if (!stepItem.open) return;
+
+        var group = stepItem.getAttribute('data-bundle-steps-group');
+        if (!group) return;
+
+        section.querySelectorAll('.bundle-steps__accordion-item[data-bundle-steps-group="' + group + '"]').forEach(function (other) {
+          if (other === stepItem) return;
+          other.removeAttribute('open');
+        });
+      });
     });
   });
 </script>
@@ -318,6 +344,7 @@
 
   .bundle-steps__product-media {
     width: 100%;
+    padding-top: 60%;
     border-radius: 12px;
     background: #f1f3ff;
   }
