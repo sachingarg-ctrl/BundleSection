@@ -25,17 +25,18 @@ assign margin_bottom = section.settings.margin_bottom | default: 0
           {%- for block in section.blocks -%}
             {%- assign step_collection = collections[block.settings.collection] -%}
 
-            <!-- Step label above accordion -->
-            <div class="bundle-steps__accordion-step-label">
-              STEP {{ forloop.index }} OF {{ total_steps }}
-            </div>
-
             <details
               class="bundle-steps__accordion-item"
               name="bundle-accordion"
               {% if forloop.first %}open{% endif %}
               {{ block.shopify_attributes }}
             >
+
+              <!-- Step label inside the block -->
+              <div class="bundle-steps__accordion-step-label">
+                STEP {{ forloop.index }} OF {{ total_steps }}
+              </div>
+
               <summary class="bundle-steps__accordion-header">
 
                 <div class="bundle-steps__accordion-left">
@@ -199,56 +200,52 @@ assign margin_bottom = section.settings.margin_bottom | default: 0
 
 .bundle-steps__accordion-list {
   border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid #dbe1f3;
-  background: #fff;
-  padding: 1rem;
+  overflow: visible;
 }
 
-.bundle-steps__accordion-item + .bundle-steps__accordion-item {
-  border-top: 1px solid #e4e7f5;
+/* Details styling - unified block background for active */
+details.bundle-steps__accordion-item {
+  border-radius: 12px;
+  margin-bottom: 24px;
+  border: 1px solid transparent;
+  background: transparent;
+  overflow: visible;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-/* STEP LABEL outside accordion summary */
+/* Step label inside details, with border line */
 .bundle-steps__accordion-step-label {
   font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #a0aac6;
-  padding-bottom: 6px;
-  margin-bottom: 12px;
+  color: #6b7280; /* gray-500 */
   font-weight: 600;
+  padding: 10px 20px 6px 20px;
   border-bottom: 1px solid #c7cbd8;
+  user-select: none;
 }
 
-details.bundle-steps__accordion-item {
-  border-top: 1px solid #c7cbd8;
-  border-bottom: 1px solid #c7cbd8;
-  border-radius: 12px;
-  margin-bottom: 16px;
-}
-
-/* Accordion header summary */
+/* Summary - heading block */
 .bundle-steps__accordion-header {
-  padding: 14px 18px;
+  padding: 14px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+  background: #fff;
+  border-bottom: 1px solid #c7cbd8;
+  border-radius: 0;
+  font-weight: 700;
+  font-size: 18px;
+  color: #111827; /* gray-900 */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .bundle-steps__accordion-header::-webkit-details-marker {
   display: none;
 }
 
-.bundle-steps__accordion-title {
-  font-size: 18px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
+/* Right side of header */
 .bundle-steps__accordion-right {
   display: flex;
   align-items: center;
@@ -265,7 +262,7 @@ details.bundle-steps__accordion-item {
   white-space: nowrap;
 }
 
-/* Arrow down icon styling */
+/* Arrow icon */
 .bundle-steps__accordion-chevron {
   transition: transform 0.25s ease;
   font-size: 18px;
@@ -275,7 +272,6 @@ details.bundle-steps__accordion-item {
 /* Rotate arrow when open */
 .bundle-steps__accordion-item[open] .bundle-steps__accordion-chevron {
   transform: rotate(180deg);
-  color: #3657ff;
 }
 
 /* Show selected count and hide arrow when open */
@@ -283,12 +279,39 @@ details.bundle-steps__accordion-item {
   display: inline-flex;
 }
 
+/* Active/open details style */
+.bundle-steps__accordion-item[open] {
+  background: #f4f6fb;
+  border-color: #dbe1f3;
+  box-shadow: 0 3px 8px rgb(54 87 255 / 0.15);
+  z-index: 1;
+}
+
+/* Also style summary inside open details */
+.bundle-steps__accordion-item[open] > summary {
+  background: transparent;
+  color: #3657ff;
+  border-bottom: none;
+  font-weight: 800;
+}
+
+/* Step label color for active */
+.bundle-steps__accordion-item[open] .bundle-steps__accordion-step-label {
+  color: #3657ff;
+  font-weight: 700;
+}
+
+/* Accordion body */
+.bundle-steps__accordion-body {
+  padding: 20px;
+}
+
 /* Product panel styles */
 .bundle-steps__products-panel {
-  background: #f5f7ff;
+  background: #f4f6fb;
   border-radius: 20px;
   padding: 20px;
-  margin-top: 12px;
+  margin-top: 0;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -415,8 +438,8 @@ details.bundle-steps__accordion-item {
 .bundle-steps__primary-btn {
   border-radius: 999px;
   border: 1px solid #b8c2ff;
-  background: #f5f7ff;
-  color: #3657ff;
+  background: #3657ff;
+  color: #fff;
   padding: 10px 22px;
   font-weight: 700;
   cursor: pointer;
@@ -424,10 +447,13 @@ details.bundle-steps__accordion-item {
   min-width: 160px;
   user-select: none;
   transition: background-color 0.3s ease;
+  align-self: center;
+  box-shadow: 0 4px 8px rgb(54 87 255 / 0.5);
 }
 
 .bundle-steps__primary-btn:hover {
-  background-color: #d3dbff;
+  background-color: #2a42cc;
+  box-shadow: 0 6px 14px rgb(42 66 204 / 0.75);
 }
 
 .bundle-steps__card-footer {
