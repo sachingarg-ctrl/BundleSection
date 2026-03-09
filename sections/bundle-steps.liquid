@@ -19,6 +19,7 @@
       {%- if section.blocks.size > 0 -%}
         {%- assign total_steps = section.blocks.size -%}
         {%- assign active_block = section.blocks.first -%}
+        {%- assign active_collection = collections[active_block.settings.collection] -%}
 
         <div class="bundle-steps__card bundle-steps__card--primary">
           <div class="bundle-steps__card-header">
@@ -27,7 +28,6 @@
             </div>
             <div class="bundle-steps__step-title-wrapper">
               <div class="bundle-steps__step-icon">
-                <!-- placeholder icon -->
                 <span>📷</span>
               </div>
               <div>
@@ -42,35 +42,64 @@
           </div>
 
           <div class="bundle-steps__card-body">
-            <div class="bundle-steps__products-grid">
-              {%- for i in (1..4) -%}
-                <div class="bundle-steps__product-card">
-                  <div class="bundle-steps__product-badge">Save 22%</div>
-                  <div class="bundle-steps__product-media"></div>
-                  <div class="bundle-steps__product-content">
-                    <h3 class="bundle-steps__product-title">Product title</h3>
-                    <p class="bundle-steps__product-description">
-                      Short description text. Real content will be added later.
-                    </p>
-                    <div class="bundle-steps__product-options">
-                      <span class="bundle-steps__swatch bundle-steps__swatch--white"></span>
-                      <span class="bundle-steps__swatch bundle-steps__swatch--black"></span>
-                    </div>
-                    <div class="bundle-steps__product-footer">
-                      <div class="bundle-steps__qty-control">
-                        <button type="button" class="bundle-steps__qty-btn">-</button>
-                        <span class="bundle-steps__qty-value">0</span>
-                        <button type="button" class="bundle-steps__qty-btn">+</button>
+            {%- if active_collection and active_collection.products_count > 0 -%}
+              <div class="bundle-steps__products-grid">
+                {%- for product in active_collection.products limit: 4 -%}
+                  <div class="bundle-steps__product-card">
+                    {%- if product.compare_at_price_max > product.price -%}
+                      <div class="bundle-steps__product-badge">
+                        {{ 'products.product.on_sale' | t | default: 'Save' }}
                       </div>
-                      <div class="bundle-steps__price">
-                        <span class="bundle-steps__compare-at">$99.99</span>
-                        <span class="bundle-steps__final-price">$79.99</span>
+                    {%- endif -%}
+
+                    <div class="bundle-steps__product-media">
+                      {%- if product.featured_image -%}
+                        {{ product.featured_image | image_url: width: 400 | image_tag: loading: 'lazy', class: 'bundle-steps__product-image' }}
+                      {%- endif -%}
+                    </div>
+
+                    <div class="bundle-steps__product-content">
+                      <h3 class="bundle-steps__product-title">
+                        {{ product.title }}
+                      </h3>
+
+                      {%- if product.description != blank -%}
+                        <p class="bundle-steps__product-description">
+                          {{ product.description | strip_html | truncate: 80 }}
+                        </p>
+                      {%- endif -%}
+
+                      <div class="bundle-steps__product-options">
+                        <span class="bundle-steps__swatch bundle-steps__swatch--white"></span>
+                        <span class="bundle-steps__swatch bundle-steps__swatch--black"></span>
+                      </div>
+
+                      <div class="bundle-steps__product-footer">
+                        <div class="bundle-steps__qty-control">
+                          <button type="button" class="bundle-steps__qty-btn">-</button>
+                          <span class="bundle-steps__qty-value">0</span>
+                          <button type="button" class="bundle-steps__qty-btn">+</button>
+                        </div>
+                        <div class="bundle-steps__price">
+                          {%- if product.compare_at_price_max > product.price -%}
+                            <span class="bundle-steps__compare-at">
+                              {{ product.compare_at_price_max | money }}
+                            </span>
+                          {%- endif -%}
+                          <span class="bundle-steps__final-price">
+                            {{ product.price | money }}
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              {%- endfor -%}
-            </div>
+                {%- endfor -%}
+              </div>
+            {%- else -%}
+              <p class="bundle-steps__empty">
+                Select a collection for this step to see its products here.
+              </p>
+            {%- endif -%}
           </div>
 
           <div class="bundle-steps__card-footer">
