@@ -199,18 +199,18 @@
             "next_button_label": "Next: Choose your sensors"
           }
         },
-        "step_h3zeQP": {
-          "type": "step",
-          "settings": {
-            "collection": "protection",
-            "step_heading": "Choose your cameras",
-            "next_button_label": "Next: Choose your plan"
-          }
-        },
         "step_7cmNwW": {
           "type": "step",
           "settings": {
             "collection": "sensors",
+            "step_heading": "Choose your sensors",
+            "next_button_label": "Next: Choose your protection"
+          }
+        },
+        "step_h3zeQP": {
+          "type": "step",
+          "settings": {
+            "collection": "protection",
             "step_heading": "Choose your cameras",
             "next_button_label": "Next: Choose your plan"
           }
@@ -219,8 +219,8 @@
       "block_order": [
         "step_enf7dm",
         "step_WGcD7i",
-        "step_h3zeQP",
-        "step_7cmNwW"
+        "step_7cmNwW",
+        "step_h3zeQP"
       ],
       "name": "Bundle steps builder",
       "settings": {
