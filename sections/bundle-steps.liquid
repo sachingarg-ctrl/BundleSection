@@ -96,10 +96,58 @@ assign margin_bottom = section.settings.margin_bottom | default: 0
                                 </p>
                               {%- endif -%}
 
-                              <div class="bundle-steps__product-options">
-                                <span class="bundle-steps__swatch bundle-steps__swatch--white">white</span>
-                                <span class="bundle-steps__swatch bundle-steps__swatch--black"> black</span>
-                              </div>
+                           <div class="bundle-steps__product-options">
+
+{% assign color_index = nil %}
+
+{% for option in product.options %}
+  {% assign option_name = option | downcase %}
+  {% if option_name contains 'color' %}
+    {% assign color_index = forloop.index0 %}
+  {% endif %}
+{% endfor %}
+
+{% if color_index != nil %}
+
+{% assign shown_colors = '' %}
+
+{% for variant in product.variants %}
+
+{% assign color_value = variant.options[color_index] %}
+
+{% unless shown_colors contains color_value %}
+
+<button
+class="bundle-steps__swatch"
+data-variant-id="{{ variant.id }}"
+>
+
+{% if variant.image %}
+
+{{ variant.image
+| image_url: width: 40
+| image_tag:
+class: 'bundle-steps__swatch-img',
+loading: 'lazy'
+}}
+
+{% endif %}
+
+<span class="bundle-steps__swatch-label">
+{{ color_value }}
+</span>
+
+</button>
+
+{% assign shown_colors = shown_colors | append: color_value | append: ',' %}
+
+{% endunless %}
+
+{% endfor %}
+
+{% endif %}
+
+</div>
 
                               <div class="bundle-steps__product-footer">
 
