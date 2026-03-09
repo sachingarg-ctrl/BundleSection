@@ -174,7 +174,7 @@ assign margin_bottom = section.settings.margin_bottom | default: 0
     </div>
 
     <div class="bundle-steps__right">
-      <!-- Right side content ignored as requested -->
+      <!-- Right side content intentionally left empty -->
     </div>
 
   </div>
@@ -248,7 +248,7 @@ assign margin_bottom = section.settings.margin_bottom | default: 0
   user-select: none;
 }
 
-/* Hide selected count text by default */
+/* Hide selected count by default */
 .bundle-steps__selected-count {
   display: none;
   font-size: 14px;
@@ -433,3 +433,86 @@ assign margin_bottom = section.settings.margin_bottom | default: 0
 }
 
 {% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Bundle steps builder",
+  "settings": [
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Margin top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Margin bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "step_heading",
+          "label": "Step heading",
+          "default": "Choose your products"
+        },
+        {
+          "type": "text",
+          "id": "next_button_label",
+          "label": "Next button label",
+          "default": "Next step"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bundle steps builder",
+      "blocks": [
+        { "type": "step" },
+        { "type": "step" },
+        { "type": "step" }
+      ]
+    }
+  ]
+}
+{% endschema %}
