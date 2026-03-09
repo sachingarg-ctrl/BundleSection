@@ -179,12 +179,63 @@
         "title": "Product Highlights Title",
         "description": "Product Highlights description will appear here."
       }
+    },
+    "bundle_steps_3t8BWK": {
+      "type": "bundle-steps",
+      "blocks": {
+        "step_enf7dm": {
+          "type": "step",
+          "settings": {
+            "collection": "cameras",
+            "step_heading": "Choose your cameras",
+            "next_button_label": "Next: Choose your plan"
+          }
+        },
+        "step_WGcD7i": {
+          "type": "step",
+          "settings": {
+            "collection": "plan",
+            "step_heading": "Choose your cameras",
+            "next_button_label": "Next: Choose your plan"
+          }
+        },
+        "step_h3zeQP": {
+          "type": "step",
+          "settings": {
+            "collection": "protection",
+            "step_heading": "Choose your cameras",
+            "next_button_label": "Next: Choose your plan"
+          }
+        },
+        "step_7cmNwW": {
+          "type": "step",
+          "settings": {
+            "collection": "sensors",
+            "step_heading": "Choose your cameras",
+            "next_button_label": "Next: Choose your plan"
+          }
+        }
+      },
+      "block_order": [
+        "step_enf7dm",
+        "step_WGcD7i",
+        "step_h3zeQP",
+        "step_7cmNwW"
+      ],
+      "name": "Bundle steps builder",
+      "settings": {
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "margin_top": 0,
+        "margin_bottom": 0
+      }
     }
   },
   "order": [
     "hero_1",
     "featured_collections_hhETJ9",
     "selling_points_v2_6NgzaK",
-    "product_highlights_gUaG6E"
+    "product_highlights_gUaG6E",
+    "bundle_steps_3t8BWK"
   ]
 }
