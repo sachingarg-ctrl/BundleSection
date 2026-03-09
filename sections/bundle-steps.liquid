@@ -58,12 +58,6 @@
                         <div class="bundle-steps__products-grid">
                           {%- for product in step_collection.products limit: 5 -%}
                             <div class="bundle-steps__product-card">
-                              {%- if product.compare_at_price_max > product.price -%}
-                                <div class="bundle-steps__product-badge">
-                                  {{ 'products.product.on_sale' | t | default: 'Save' }}
-                                </div>
-                              {%- endif -%}
-
                               <div class="bundle-steps__product-media">
                                 {%- if product.featured_image -%}
                                   {{ product.featured_image | image_url: width: 400 | image_tag: loading: 'lazy', class: 'bundle-steps__product-image' }}
