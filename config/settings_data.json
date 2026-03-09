@@ -116,8 +116,6 @@
     }
   },
   "platform_customizations": {
-    "custom_css": [
-      ".localization-wrapper{display: none;}"
-    ]
+    "custom_css": []
   }
 }
