@@ -211,7 +211,7 @@
           "type": "step",
           "settings": {
             "collection": "protection",
-            "step_heading": "Choose your cameras",
+            "step_heading": "Choose your protection",
             "next_button_label": ""
           }
         }
