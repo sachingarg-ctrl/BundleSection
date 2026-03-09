@@ -195,8 +195,8 @@
           "type": "step",
           "settings": {
             "collection": "plan",
-            "step_heading": "Choose your cameras",
-            "next_button_label": "Next: Choose your plan"
+            "step_heading": "Choose your plan",
+            "next_button_label": "Next: Choose your sensors"
           }
         },
         "step_h3zeQP": {
