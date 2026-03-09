@@ -1,0 +1,508 @@
+{%- liquid
+  assign padding_top = section.settings.padding_top | default: 40
+  assign padding_bottom = section.settings.padding_bottom | default: 40
+  assign margin_top = section.settings.margin_top | default: 0
+  assign margin_bottom = section.settings.margin_bottom | default: 0
+-%}
+
+<section
+  class="bundle-steps"
+  style="
+    padding-top: {{ padding_top }}px;
+    padding-bottom: {{ padding_bottom }}px;
+    margin-top: {{ margin_top }}px;
+    margin-bottom: {{ margin_bottom }}px;
+  "
+>
+  <div class="bundle-steps__inner">
+    <div class="bundle-steps__left">
+      {%- if section.blocks.size > 0 -%}
+        {%- assign total_steps = section.blocks.size -%}
+        {%- assign active_block = section.blocks.first -%}
+
+        <div class="bundle-steps__card bundle-steps__card--primary">
+          <div class="bundle-steps__card-header">
+            <div class="bundle-steps__step-label">
+              STEP 1 OF {{ total_steps }}
+            </div>
+            <div class="bundle-steps__step-title-wrapper">
+              <div class="bundle-steps__step-icon">
+                <!-- placeholder icon -->
+                <span>📷</span>
+              </div>
+              <div>
+                <h2 class="bundle-steps__step-heading">
+                  {{ active_block.settings.step_heading | default: 'Choose your cameras' }}
+                </h2>
+                <p class="bundle-steps__step-subtext">
+                  Add items for this step. All collection and product functionality will be wired later.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bundle-steps__card-body">
+            <div class="bundle-steps__products-grid">
+              {%- for i in (1..4) -%}
+                <div class="bundle-steps__product-card">
+                  <div class="bundle-steps__product-badge">Save 22%</div>
+                  <div class="bundle-steps__product-media"></div>
+                  <div class="bundle-steps__product-content">
+                    <h3 class="bundle-steps__product-title">Product title</h3>
+                    <p class="bundle-steps__product-description">
+                      Short description text. Real content will be added later.
+                    </p>
+                    <div class="bundle-steps__product-options">
+                      <span class="bundle-steps__swatch bundle-steps__swatch--white"></span>
+                      <span class="bundle-steps__swatch bundle-steps__swatch--black"></span>
+                    </div>
+                    <div class="bundle-steps__product-footer">
+                      <div class="bundle-steps__qty-control">
+                        <button type="button" class="bundle-steps__qty-btn">-</button>
+                        <span class="bundle-steps__qty-value">0</span>
+                        <button type="button" class="bundle-steps__qty-btn">+</button>
+                      </div>
+                      <div class="bundle-steps__price">
+                        <span class="bundle-steps__compare-at">$99.99</span>
+                        <span class="bundle-steps__final-price">$79.99</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {%- endfor -%}
+            </div>
+          </div>
+
+          <div class="bundle-steps__card-footer">
+            <button type="button" class="bundle-steps__primary-btn">
+              {{ active_block.settings.next_button_label | default: 'Next: Choose your plan' }}
+            </button>
+          </div>
+        </div>
+
+        <div class="bundle-steps__accordion-list">
+          {%- for block in section.blocks -%}
+            {%- assign step_number = forloop.index -%}
+            <div class="bundle-steps__accordion-item" {{ block.shopify_attributes }}>
+              <div class="bundle-steps__accordion-header">
+                <div class="bundle-steps__accordion-left">
+                  <div class="bundle-steps__step-circle">
+                    {{ step_number }}
+                  </div>
+                  <div>
+                    <div class="bundle-steps__accordion-step-label">
+                      STEP {{ step_number }} OF {{ total_steps }}
+                    </div>
+                    <div class="bundle-steps__accordion-title">
+                      {{ block.settings.step_heading | default: 'Step heading' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="bundle-steps__accordion-status">
+                  <span class="bundle-steps__accordion-status-text">
+                    Not started
+                  </span>
+                  <span class="bundle-steps__accordion-chevron">⌄</span>
+                </div>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <p class="bundle-steps__empty">
+          Add blocks to configure your bundle steps.
+        </p>
+      {%- endif -%}
+    </div>
+
+    <div class="bundle-steps__right">
+      <!-- Right side (summary) will be implemented later -->
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .bundle-steps {
+    background-color: #f4f6fb;
+  }
+
+  .bundle-steps__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    gap: 24px;
+  }
+
+  .bundle-steps__left {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .bundle-steps__right {
+    /* placeholder for future right-side summary card */
+  }
+
+  .bundle-steps__card {
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 18px 45px rgba(22, 38, 90, 0.18);
+    padding: 24px 28px 20px;
+  }
+
+  .bundle-steps__card-header {
+    margin-bottom: 16px;
+  }
+
+  .bundle-steps__step-label {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #7b88a8;
+    margin-bottom: 8px;
+  }
+
+  .bundle-steps__step-title-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .bundle-steps__step-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background-color: #ecf2ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+  }
+
+  .bundle-steps__step-heading {
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0 0 4px;
+    color: #121933;
+  }
+
+  .bundle-steps__step-subtext {
+    margin: 0;
+    font-size: 13px;
+    color: #7b88a8;
+  }
+
+  .bundle-steps__card-body {
+    margin-top: 12px;
+  }
+
+  .bundle-steps__products-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .bundle-steps__product-card {
+    background-color: #f7f8fc;
+    border-radius: 12px;
+    padding: 12px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .bundle-steps__product-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #3657ff;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 999px;
+  }
+
+  .bundle-steps__product-media {
+    width: 100%;
+    padding-top: 56%;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #ffffff, #e0e7ff);
+  }
+
+  .bundle-steps__product-content {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .bundle-steps__product-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0;
+    color: #1a2340;
+  }
+
+  .bundle-steps__product-description {
+    font-size: 12px;
+    margin: 0;
+    color: #7b88a8;
+  }
+
+  .bundle-steps__product-options {
+    display: flex;
+    gap: 6px;
+    margin-top: 4px;
+  }
+
+  .bundle-steps__swatch {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid #d0d6ec;
+  }
+
+  .bundle-steps__swatch--white {
+    background-color: #ffffff;
+  }
+
+  .bundle-steps__swatch--black {
+    background-color: #1c1f2b;
+  }
+
+  .bundle-steps__product-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 6px;
+    gap: 8px;
+  }
+
+  .bundle-steps__qty-control {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    background-color: #ffffff;
+    border: 1px solid #d0d6ec;
+    overflow: hidden;
+  }
+
+  .bundle-steps__qty-btn {
+    border: none;
+    background: transparent;
+    padding: 4px 8px;
+    font-size: 14px;
+    cursor: default;
+    color: #5a6688;
+  }
+
+  .bundle-steps__qty-value {
+    padding: 0 8px;
+    font-size: 13px;
+  }
+
+  .bundle-steps__price {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .bundle-steps__compare-at {
+    font-size: 11px;
+    color: #a0aac6;
+    text-decoration: line-through;
+  }
+
+  .bundle-steps__final-price {
+    font-size: 13px;
+    font-weight: 600;
+    color: #121933;
+  }
+
+  .bundle-steps__card-footer {
+    margin-top: 16px;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .bundle-steps__primary-btn {
+    border: none;
+    border-radius: 999px;
+    background-color: #3657ff;
+    color: #ffffff;
+    padding: 10px 22px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: default;
+  }
+
+  .bundle-steps__accordion-list {
+    margin-top: 8px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #dbe1f3;
+    background-color: #ffffff;
+  }
+
+  .bundle-steps__accordion-item + .bundle-steps__accordion-item {
+    border-top: 1px solid #e4e7f5;
+  }
+
+  .bundle-steps__accordion-header {
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .bundle-steps__accordion-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .bundle-steps__step-circle {
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    background-color: #ecf2ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: #3657ff;
+  }
+
+  .bundle-steps__accordion-step-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #a0aac6;
+  }
+
+  .bundle-steps__accordion-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #121933;
+  }
+
+  .bundle-steps__accordion-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #7b88a8;
+  }
+
+  .bundle-steps__accordion-chevron {
+    font-size: 14px;
+  }
+
+  .bundle-steps__empty {
+    margin: 0;
+    font-size: 14px;
+    color: #7b88a8;
+  }
+
+  @media (max-width: 1024px) {
+    .bundle-steps__inner {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Bundle steps builder",
+  "settings": [
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Margin top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Margin bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "step_heading",
+          "label": "Step heading",
+          "default": "Choose your cameras"
+        },
+        {
+          "type": "text",
+          "id": "next_button_label",
+          "label": "Next button label",
+          "default": "Next: Choose your plan"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bundle steps builder",
+      "blocks": [
+        {
+          "type": "step"
+        },
+        {
+          "type": "step"
+        },
+        {
+          "type": "step"
+        },
+        {
+          "type": "step"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
