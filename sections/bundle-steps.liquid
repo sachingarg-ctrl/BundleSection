@@ -18,109 +18,14 @@
     <div class="bundle-steps__left">
       {%- if section.blocks.size > 0 -%}
         {%- assign total_steps = section.blocks.size -%}
-        {%- assign active_block = section.blocks.first -%}
-        {%- assign active_collection = collections[active_block.settings.collection] -%}
-
-        <div class="bundle-steps__card bundle-steps__card--primary">
-          <div class="bundle-steps__card-header">
-            <div class="bundle-steps__step-label">
-              STEP 1 OF {{ total_steps }}
-            </div>
-
-            <div class="bundle-steps__card-top-row">
-              <div class="bundle-steps__step-title-wrapper">
-                <div class="bundle-steps__step-icon">
-                  <span>📷</span>
-                </div>
-                <div>
-                  <h2 class="bundle-steps__step-heading">
-                    {{ active_block.settings.step_heading | default: 'Choose your cameras' }}
-                  </h2>
-                </div>
-              </div>
-
-              <div class="bundle-steps__selected-count">
-                <span class="bundle-steps__selected-count-value">0</span>
-                <span class="bundle-steps__selected-count-label">selected</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="bundle-steps__card-body">
-            {%- if active_collection and active_collection.products_count > 0 -%}
-              <div class="bundle-steps__products-panel">
-                <div class="bundle-steps__products-grid">
-                {%- for product in active_collection.products limit: 5 -%}
-                  <div class="bundle-steps__product-card">
-                    {%- if product.compare_at_price_max > product.price -%}
-                      <div class="bundle-steps__product-badge">
-                        {{ 'products.product.on_sale' | t | default: 'Save' }}
-                      </div>
-                    {%- endif -%}
-
-                    <div class="bundle-steps__product-media">
-                      {%- if product.featured_image -%}
-                        {{ product.featured_image | image_url: width: 400 | image_tag: loading: 'lazy', class: 'bundle-steps__product-image' }}
-                      {%- endif -%}
-                    </div>
-
-                    <div class="bundle-steps__product-content">
-                      <h3 class="bundle-steps__product-title">
-                        {{ product.title }}
-                      </h3>
-
-                      {%- if product.description != blank -%}
-                        <p class="bundle-steps__product-description">
-                          {{ product.description | strip_html | truncate: 80 }}
-                        </p>
-                      {%- endif -%}
-
-                      <div class="bundle-steps__product-options">
-                        <span class="bundle-steps__swatch bundle-steps__swatch--white"></span>
-                        <span class="bundle-steps__swatch bundle-steps__swatch--black"></span>
-                      </div>
-
-                      <div class="bundle-steps__product-footer">
-                        <div class="bundle-steps__qty-control">
-                          <button type="button" class="bundle-steps__qty-btn">-</button>
-                          <span class="bundle-steps__qty-value">0</span>
-                          <button type="button" class="bundle-steps__qty-btn">+</button>
-                        </div>
-                        <div class="bundle-steps__price">
-                          {%- if product.compare_at_price_max > product.price -%}
-                            <span class="bundle-steps__compare-at">
-                              {{ product.compare_at_price_max | money }}
-                            </span>
-                          {%- endif -%}
-                          <span class="bundle-steps__final-price">
-                            {{ product.price | money }}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                {%- endfor -%}
-                </div>
-              </div>
-            {%- else -%}
-              <p class="bundle-steps__empty">
-                Select a collection for this step to see its products here.
-              </p>
-            {%- endif -%}
-          </div>
-
-          <div class="bundle-steps__card-footer">
-            <button type="button" class="bundle-steps__primary-btn">
-              {{ active_block.settings.next_button_label | default: 'Next: Choose your plan' }}
-            </button>
-          </div>
-        </div>
 
         <div class="bundle-steps__accordion-list">
           {%- for block in section.blocks -%}
             {%- assign step_number = forloop.index -%}
-            <div class="bundle-steps__accordion-item" {{ block.shopify_attributes }}>
-              <div class="bundle-steps__accordion-header">
+            {%- assign step_collection = collections[block.settings.collection] -%}
+
+            <details class="bundle-steps__accordion-item"{% if forloop.first %} open{% endif %} {{ block.shopify_attributes }}>
+              <summary class="bundle-steps__accordion-header">
                 <div class="bundle-steps__accordion-left">
                   <div class="bundle-steps__step-circle">
                     {{ step_number }}
@@ -134,14 +39,89 @@
                     </div>
                   </div>
                 </div>
-                <div class="bundle-steps__accordion-status">
-                  <span class="bundle-steps__accordion-status-text">
-                    Not started
+
+                <div class="bundle-steps__accordion-right">
+                  <span class="bundle-steps__selected-count">
+                    <span class="bundle-steps__selected-count-value">0</span>
+                    <span class="bundle-steps__selected-count-label">selected</span>
                   </span>
                   <span class="bundle-steps__accordion-chevron">⌄</span>
                 </div>
+              </summary>
+
+              <div class="bundle-steps__accordion-body">
+                <div class="bundle-steps__card">
+                  <div class="bundle-steps__card-body">
+                    {%- if step_collection and step_collection.products_count > 0 -%}
+                      <div class="bundle-steps__products-panel">
+                        <div class="bundle-steps__products-grid">
+                          {%- for product in step_collection.products limit: 5 -%}
+                            <div class="bundle-steps__product-card">
+                              {%- if product.compare_at_price_max > product.price -%}
+                                <div class="bundle-steps__product-badge">
+                                  {{ 'products.product.on_sale' | t | default: 'Save' }}
+                                </div>
+                              {%- endif -%}
+
+                              <div class="bundle-steps__product-media">
+                                {%- if product.featured_image -%}
+                                  {{ product.featured_image | image_url: width: 400 | image_tag: loading: 'lazy', class: 'bundle-steps__product-image' }}
+                                {%- endif -%}
+                              </div>
+
+                              <div class="bundle-steps__product-content">
+                                <h3 class="bundle-steps__product-title">
+                                  {{ product.title }}
+                                </h3>
+
+                                {%- if product.description != blank -%}
+                                  <p class="bundle-steps__product-description">
+                                    {{ product.description | strip_html | truncate: 80 }}
+                                  </p>
+                                {%- endif -%}
+
+                                <div class="bundle-steps__product-options">
+                                  <span class="bundle-steps__swatch bundle-steps__swatch--white"></span>
+                                  <span class="bundle-steps__swatch bundle-steps__swatch--black"></span>
+                                </div>
+
+                                <div class="bundle-steps__product-footer">
+                                  <div class="bundle-steps__qty-control">
+                                    <button type="button" class="bundle-steps__qty-btn">-</button>
+                                    <span class="bundle-steps__qty-value">0</span>
+                                    <button type="button" class="bundle-steps__qty-btn">+</button>
+                                  </div>
+                                  <div class="bundle-steps__price">
+                                    {%- if product.compare_at_price_max > product.price -%}
+                                      <span class="bundle-steps__compare-at">
+                                        {{ product.compare_at_price_max | money }}
+                                      </span>
+                                    {%- endif -%}
+                                    <span class="bundle-steps__final-price">
+                                      {{ product.price | money }}
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          {%- endfor -%}
+                        </div>
+                      </div>
+                    {%- else -%}
+                      <p class="bundle-steps__empty">
+                        Select a collection for this step to see its products here.
+                      </p>
+                    {%- endif -%}
+                  </div>
+
+                  <div class="bundle-steps__card-footer">
+                    <button type="button" class="bundle-steps__primary-btn">
+                      {{ block.settings.next_button_label | default: 'Next: Choose your plan' }}
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
+            </details>
           {%- endfor -%}
         </div>
       {%- else -%}
