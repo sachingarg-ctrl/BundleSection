@@ -826,11 +826,23 @@
 
       let total = 0;
 
-      accordion.querySelectorAll('.bundle-steps__product-card').forEach((productCard) => {
-        const variantId = productCard.dataset.variantId;
+      accordion.querySelectorAll('.bundle-steps__swatch').forEach((swatch) => {
+        const variantId = swatch.dataset.variantId;
 
-        if (variantId && this.state[variantId]) {
+        if (this.state[variantId]) {
           total += this.state[variantId];
+        }
+      });
+
+      accordion.querySelectorAll('.bundle-steps__product-card').forEach((productCard) => {
+        const hasVariants = productCard.dataset.hasVariants === 'true';
+
+        if (!hasVariants) {
+          const variantId = productCard.dataset.defaultVariant;
+
+          if (this.state[variantId]) {
+            total += this.state[variantId];
+          }
         }
       });
 
