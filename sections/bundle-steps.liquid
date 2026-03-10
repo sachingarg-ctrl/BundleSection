@@ -193,6 +193,8 @@
     </div>
   </section>
 </bundle-steps>
+
+
 <script>
   class BundleSteps extends HTMLElement {
     constructor() {
@@ -207,28 +209,40 @@
       const cards = this.querySelectorAll('.bundle-steps__product-card');
 
       cards.forEach((card) => {
-        card.dataset.variantId = card.dataset.defaultVariant;
-      });
+        const defaultVariant = card.dataset.defaultVariant;
 
-      const swatches = this.querySelectorAll('.bundle-steps__swatch');
+        // set default variant
+        card.dataset.variantId = defaultVariant;
 
-      swatches.forEach((swatch) => {
-        swatch.addEventListener('click', () => {
-          const variantId = swatch.dataset.variantId;
-          const card = swatch.closest('.bundle-steps__product-card');
+        const swatches = card.querySelectorAll('.bundle-steps__swatch');
 
-          card.dataset.variantId = variantId;
+        // auto select first swatch if exists
+        if (swatches.length) {
+          swatches[0].classList.add('is-selected');
+          card.dataset.variantId = swatches[0].dataset.variantId;
+        }
 
-          const allSwatches = card.querySelectorAll('.bundle-steps__swatch');
-          allSwatches.forEach((s) => s.classList.remove('is-selected'));
+        swatches.forEach((swatch) => {
+          swatch.addEventListener('click', () => {
+            const variantId = swatch.dataset.variantId;
 
-          swatch.classList.add('is-selected');
+            // update selected variant
+            card.dataset.variantId = variantId;
+
+            // remove active from all swatches
+            swatches.forEach((s) => s.classList.remove('is-selected'));
+
+            // add active class
+            swatch.classList.add('is-selected');
+          });
         });
       });
     }
   }
 
-  customElements.define('bundle-steps', BundleSteps);
+  if (!customElements.get('bundle-steps')) {
+    customElements.define('bundle-steps', BundleSteps);
+  }
 </script>
 
 {% stylesheet %}
