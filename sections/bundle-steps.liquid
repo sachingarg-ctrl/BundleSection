@@ -192,42 +192,41 @@
       <div class="bundle-steps__right"></div>
     </div>
   </section>
-</bundle-steps> 
+</bundle-steps>
 <script>
-class BundleSteps extends HTMLElement {
-  constructor() {
-    super();
-  }
+  class BundleSteps extends HTMLElement {
+    constructor() {
+      super();
+    }
 
-  connectedCallback() {
-    this.initVariantSelection();
-  }
+    connectedCallback() {
+      this.initVariantSelection();
+    }
 
-  initVariantSelection() {
-    const swatches = this.querySelectorAll('.bundle-steps__swatch');
+    initVariantSelection() {
+      const swatches = this.querySelectorAll('.bundle-steps__swatch');
 
-    swatches.forEach((swatch) => {
-      swatch.addEventListener('click', () => {
+      swatches.forEach((swatch) => {
+        swatch.addEventListener('click', () => {
+          const variantId = swatch.dataset.variantId;
+          const card = swatch.closest('.bundle-steps__product-card');
 
-        const variantId = swatch.dataset.variantId;
-        const card = swatch.closest('.bundle-steps__product-card');
+          // store selected variant on card
+          card.dataset.variantId = variantId;
 
-        // store selected variant on card
-        card.dataset.variantId = variantId;
+          // remove previous active swatch
+          const allSwatches = card.querySelectorAll('.bundle-steps__swatch');
+          allSwatches.forEach((s) => s.classList.remove('is-selected'));
 
-        // remove previous active swatch
-        const allSwatches = card.querySelectorAll('.bundle-steps__swatch');
-        allSwatches.forEach((s) => s.classList.remove('is-selected'));
-
-        // highlight current swatch
-        swatch.classList.add('is-selected');
-
+          // highlight current swatch
+          swatch.classList.add('is-selected');
+        });
       });
-    });
+    }
   }
-}
 
-customElements.define('bundle-steps', BundleSteps);
+  customElements.define('bundle-steps', BundleSteps);
+</script>
 
 {% stylesheet %}
   /* ORIGINAL CSS */
@@ -568,4 +567,3 @@ customElements.define('bundle-steps', BundleSteps);
   ]
 }
 {% endschema %}
- 
