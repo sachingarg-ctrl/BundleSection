@@ -738,119 +738,131 @@
 </bundle-steps>
 
 <script>
-  class BundleSteps extends HTMLElement {
-    constructor() {
-      super();
-      this.state = {};
-    }
-
-    connectedCallback() {
-      this.initSwatches();
-      this.initQuantity();
-    }
-
-    initSwatches() {
-      this.querySelectorAll('.bundle-steps__swatch').forEach((swatch) => {
-        swatch.addEventListener('click', () => {
-          const variantId = swatch.dataset.variantId;
-          const card = swatch.closest('.bundle-steps__product-card');
-          const qtyEl = card.querySelector('.bundle-steps__qty-value');
-
-          card.dataset.variantId = variantId;
-
-          if (!this.state[variantId]) {
-            this.state[variantId] = 0;
-          }
-
-          qtyEl.textContent = this.state[variantId];
-        });
-      });
-    }
-
-    initQuantity() {
-      this.querySelectorAll('.bundle-steps__qty-btn').forEach((btn) => {
-        btn.addEventListener('click', () => {
-          const action = btn.dataset.action;
-          const card = btn.closest('.bundle-steps__product-card');
-          const qtyEl = card.querySelector('.bundle-steps__qty-value');
-
-          let variantId = card.dataset.variantId;
-          const hasVariants = card.dataset.hasVariants === 'true';
-
-          if (!variantId) {
-            if (!hasVariants) {
-              variantId = card.dataset.defaultVariant;
-              card.dataset.variantId = variantId;
-            } else {
-              return;
-            }
-          }
-
-          if (!this.state[variantId]) {
-            this.state[variantId] = 0;
-          }
-
-          if (action === 'increase') {
-            this.state[variantId]++;
-          }
-
-          if (action === 'decrease' && this.state[variantId] > 0) {
-            this.state[variantId]--;
-          }
-
-          qtyEl.textContent = this.state[variantId];
-
-          this.updateVariantHighlight(card);
-          this.updateCounter(card);
-        });
-      });
-    }
-
-    updateVariantHighlight(card) {
-      const swatches = card.querySelectorAll('.bundle-steps__swatch');
-
-      swatches.forEach((swatch) => {
-        const variantId = swatch.dataset.variantId;
-
-        if (this.state[variantId] > 0) {
-          swatch.classList.add('is-selected');
-        } else {
-          swatch.classList.remove('is-selected');
-        }
-      });
-    }
-
-    updateCounter(card) {
-      const accordion = card.closest('.bundle-steps__accordion-item');
-      const counter = accordion.querySelector('.bundle-steps__selected-count-value');
-
-      let total = 0;
-
-      accordion.querySelectorAll('.bundle-steps__swatch').forEach((swatch) => {
-        const variantId = swatch.dataset.variantId;
-
-        if (this.state[variantId]) {
-          total += this.state[variantId];
-        }
-      });
-
-      accordion.querySelectorAll('.bundle-steps__product-card').forEach((productCard) => {
-        const hasVariants = productCard.dataset.hasVariants === 'true';
-
-        if (!hasVariants) {
-          const variantId = productCard.dataset.defaultVariant;
-
-          if (this.state[variantId]) {
-            total += this.state[variantId];
-          }
-        }
-      });
-
-      counter.textContent = total;
-    }
+class BundleSteps extends HTMLElement {
+  constructor() {
+    super();
+    this.state = {};
   }
 
-  customElements.define('bundle-steps', BundleSteps);
+  connectedCallback() {
+    this.initSwatches();
+    this.initQuantity();
+  }
+
+  getStepId(card){
+    const accordion = card.closest('.bundle-steps__accordion-item');
+    if(!accordion.dataset.stepId){
+      accordion.dataset.stepId = Math.random().toString(36).substring(2,9);
+    }
+    return accordion.dataset.stepId;
+  }
+
+  getStateKey(card, variantId){
+    const stepId = this.getStepId(card);
+    const productId = card.dataset.productId;
+    return `${stepId}-${productId}-${variantId}`;
+  }
+
+  initSwatches(){
+    this.querySelectorAll('.bundle-steps__swatch').forEach((swatch)=>{
+      swatch.addEventListener('click',()=>{
+
+        const variantId = swatch.dataset.variantId;
+        const card = swatch.closest('.bundle-steps__product-card');
+        const qtyEl = card.querySelector('.bundle-steps__qty-value');
+
+        card.dataset.variantId = variantId;
+
+        const key = this.getStateKey(card, variantId);
+
+        if(!this.state[key]){
+          this.state[key] = 0;
+        }
+
+        qtyEl.textContent = this.state[key];
+
+      });
+    });
+  }
+
+  initQuantity(){
+    this.querySelectorAll('.bundle-steps__qty-btn').forEach((btn)=>{
+      btn.addEventListener('click',()=>{
+
+        const action = btn.dataset.action;
+        const card = btn.closest('.bundle-steps__product-card');
+        const qtyEl = card.querySelector('.bundle-steps__qty-value');
+
+        let variantId = card.dataset.variantId;
+        const hasVariants = card.dataset.hasVariants === "true";
+
+        if(!variantId){
+          if(!hasVariants){
+            variantId = card.dataset.defaultVariant;
+            card.dataset.variantId = variantId;
+          }else{
+            return;
+          }
+        }
+
+        const key = this.getStateKey(card, variantId);
+
+        if(!this.state[key]){
+          this.state[key] = 0;
+        }
+
+        if(action === "increase"){
+          this.state[key]++;
+        }
+
+        if(action === "decrease" && this.state[key] > 0){
+          this.state[key]--;
+        }
+
+        qtyEl.textContent = this.state[key];
+
+        this.updateVariantHighlight(card);
+        this.updateCounter(card);
+
+      });
+    });
+  }
+
+  updateVariantHighlight(card){
+    const swatches = card.querySelectorAll('.bundle-steps__swatch');
+
+    swatches.forEach((swatch)=>{
+      const variantId = swatch.dataset.variantId;
+      const key = this.getStateKey(card, variantId);
+
+      if(this.state[key] > 0){
+        swatch.classList.add('is-selected');
+      }else{
+        swatch.classList.remove('is-selected');
+      }
+    });
+  }
+
+  updateCounter(card){
+
+    const accordion = card.closest('.bundle-steps__accordion-item');
+    const counter = accordion.querySelector('.bundle-steps__selected-count-value');
+
+    const stepId = this.getStepId(card);
+
+    let total = 0;
+
+    Object.keys(this.state).forEach((key)=>{
+      if(key.startsWith(stepId)){
+        total += this.state[key];
+      }
+    });
+
+    counter.textContent = total;
+  }
+}
+
+customElements.define('bundle-steps', BundleSteps);
 </script>
 
 {% stylesheet %}
