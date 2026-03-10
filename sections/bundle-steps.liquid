@@ -800,35 +800,34 @@
 
           qtyEl.textContent = this.state[variantId];
 
-          this.updateVariantHighlight(card, variantId);
-
-          this.updateCounter(btn);
+          this.updateVariantHighlight(card);
+          this.updateCounter(card);
         });
       });
     }
 
-    updateVariantHighlight(card, variantId) {
+    updateVariantHighlight(card) {
       const swatches = card.querySelectorAll('.bundle-steps__swatch');
 
-      swatches.forEach((s) => {
-        if (s.dataset.variantId === variantId) {
-          if (this.state[variantId] > 0) {
-            s.classList.add('is-selected');
-          } else {
-            s.classList.remove('is-selected');
-          }
+      swatches.forEach((swatch) => {
+        const variantId = swatch.dataset.variantId;
+
+        if (this.state[variantId] > 0) {
+          swatch.classList.add('is-selected');
+        } else {
+          swatch.classList.remove('is-selected');
         }
       });
     }
 
-    updateCounter(btn) {
-      const accordion = btn.closest('.bundle-steps__accordion-item');
+    updateCounter(card) {
+      const accordion = card.closest('.bundle-steps__accordion-item');
       const counter = accordion.querySelector('.bundle-steps__selected-count-value');
 
       let total = 0;
 
-      accordion.querySelectorAll('.bundle-steps__product-card').forEach((card) => {
-        const variantId = card.dataset.variantId;
+      accordion.querySelectorAll('.bundle-steps__product-card').forEach((productCard) => {
+        const variantId = productCard.dataset.variantId;
 
         if (variantId && this.state[variantId]) {
           total += this.state[variantId];
