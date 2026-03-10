@@ -600,6 +600,7 @@
                       <span class="bundle-steps__selected-count-value">0</span>
                       <span>selected</span>
                     </span>
+
                     <span class="bundle-steps__accordion-chevron">⌄</span>
                   </div>
                 </summary>
@@ -680,21 +681,13 @@
 
                                 <div class="bundle-steps__product-footer">
                                   <div class="bundle-steps__qty-control">
-                                    <button
-                                      type="button"
-                                      class="bundle-steps__qty-btn"
-                                      data-action="decrease"
-                                    >
+                                    <button type="button" class="bundle-steps__qty-btn" data-action="decrease">
                                       -
                                     </button>
 
                                     <span class="bundle-steps__qty-value">0</span>
 
-                                    <button
-                                      type="button"
-                                      class="bundle-steps__qty-btn"
-                                      data-action="increase"
-                                    >
+                                    <button type="button" class="bundle-steps__qty-btn" data-action="increase">
                                       +
                                     </button>
                                   </div>
@@ -807,8 +800,24 @@
 
           qtyEl.textContent = this.state[variantId];
 
+          this.updateVariantHighlight(card, variantId);
+
           this.updateCounter(btn);
         });
+      });
+    }
+
+    updateVariantHighlight(card, variantId) {
+      const swatches = card.querySelectorAll('.bundle-steps__swatch');
+
+      swatches.forEach((s) => {
+        if (s.dataset.variantId === variantId) {
+          if (this.state[variantId] > 0) {
+            s.classList.add('is-selected');
+          } else {
+            s.classList.remove('is-selected');
+          }
+        }
       });
     }
 
@@ -818,8 +827,12 @@
 
       let total = 0;
 
-      Object.values(this.state).forEach((q) => {
-        total += q;
+      accordion.querySelectorAll('.bundle-steps__product-card').forEach((card) => {
+        const variantId = card.dataset.variantId;
+
+        if (variantId && this.state[variantId]) {
+          total += this.state[variantId];
+        }
       });
 
       counter.textContent = total;
@@ -830,7 +843,8 @@
 </script>
 
 {% stylesheet %}
-  /* YOUR ORIGINAL CSS UNCHANGED */
+  /* ORIGINAL CSS */
+
   .bundle-steps{background:#f4f6fb;}
   .bundle-steps__inner{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:3fr 2fr;gap:28px;}
   .bundle-steps__left{display:flex;flex-direction:column;gap:18px;}
@@ -864,9 +878,15 @@
   .bundle-steps__price{text-align:right;}
   .bundle-steps__compare-at{font-size:11px;text-decoration:line-through;color:#a0aac6;margin-right:4px;}
   .bundle-steps__final-price{font-weight:700;color:#3657ff;}
-  .bundle-steps__card-footer{display:flex;justify-content:center;}
+  .bundle-steps__card_footer{display:flex;justify-content:center;}
   .bundle-steps__primary-btn{border-radius:999px;border:1px solid #b8c2ff;background:#f5f7ff;color:#3657ff;padding:10px 24px;font-weight:700;cursor:pointer;transition:.25s;}
   .bundle-steps__primary-btn:hover{background:#e0e6ff;}
+
+  .bundle-steps__swatch.is-selected{
+  border-color:#3657ff;
+  background:#e8edff;
+  }
+
   @media(max-width:1024px){
   .bundle-steps__inner{grid-template-columns:1fr;}
   .bundle-steps__products-grid{grid-template-columns:repeat(2,1fr);}
