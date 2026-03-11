@@ -1,398 +1,4 @@
-<bundle-steps>
-  {%- liquid
-    assign padding_top = section.settings.padding_top | default: 40
-    assign padding_bottom = section.settings.padding_bottom | default: 40
-    assign margin_top = section.settings.margin_top | default: 0
-    assign margin_bottom = section.settings.margin_bottom | default: 0
-  -%}
-
-  <section
-    class="bundle-steps"
-    style="
-      padding-top: {{ padding_top }}px;
-      padding-bottom: {{ padding_bottom }}px;
-      margin-top: {{ margin_top }}px;
-      margin-bottom: {{ margin_bottom }}px;
-    "
-  >
-    <div class="bundle-steps__inner">
-      <div class="bundle-steps__left">
-        {%- if section.blocks.size > 0 -%}
-          {%- assign total_steps = section.blocks.size -%}
-
-          <div class="bundle-steps__accordion-list">
-            {%- for block in section.blocks -%}
-              {%- assign step_collection = collections[block.settings.collection] -%}
-
-              <div class="bundle-steps__accordion-step-label">STEP {{ forloop.index }} OF {{ total_steps }}</div>
-
-              <details
-                class="bundle-steps__accordion-item"
-                name="bundle-accordion"
-                {% if forloop.first %}
-                  open
-                {% endif %}
-                {{ block.shopify_attributes }}
-              >
-                <summary class="bundle-steps__accordion-header">
-                  <div class="bundle-steps__accordion-left">
-                    <div class="bundle-steps__accordion-title">
-                      {{ block.settings.step_heading }}
-                    </div>
-                  </div>
-
-                  <div class="bundle-steps__accordion-right">
-                    <span class="bundle-steps__selected-count">
-                      <span class="bundle-steps__selected-count-value">0</span>
-                      <span>selected</span>
-                    </span>
-
-                    <span class="bundle-steps__accordion-chevron"> ⌄ </span>
-                  </div>
-                </summary>
-
-                <div class="bundle-steps__accordion-body">
-                  <div class="bundle-steps__card-body">
-                    {%- if step_collection and step_collection.products_count > 0 -%}
-                      <div class="bundle-steps__products-panel">
-                        <div class="bundle-steps__products-grid">
-                          {%- for product in step_collection.products limit: 5 -%}
-                            <div
-                              class="bundle-steps__product-card"
-                              data-product-id="{{ product.id }}"
-                              data-default-variant="{{ product.first_available_variant.id }}"
-                              data-has-variants="{% if product.variants.size > 1 %}true{% else %}false{% endif %}"
-                            >
-                              <div class="bundle-steps__product-media">
-                                {%- if product.featured_image -%}
-                                  {{
-                                    product.featured_image
-                                    | image_url: width: 400
-                                    | image_tag: loading: 'lazy', class: 'bundle-steps__product-image'
-                                  }}
-                                {%- endif -%}
-                              </div>
-
-                              <div class="bundle-steps__product-content">
-                                <h3 class="bundle-steps__product-title">
-                                  {{ product.title }}
-                                </h3>
-
-                                {%- if product.description != blank -%}
-                                  <p class="bundle-steps__product-description">
-                                    {{ product.description | strip_html | truncate: 80 }}
-                                  </p>
-                                {%- endif -%}
-
-                                <div class="bundle-steps__product-options">
-                                  {% assign color_index = null %}
-
-                                  {% for option in product.options %}
-                                    {% assign option_name = option | downcase %}
-                                    {% if option_name contains 'color' %}
-                                      {% assign color_index = forloop.index0 %}
-                                    {% endif %}
-                                  {% endfor %}
-
-                                  {% if color_index != null %}
-                                    {% assign shown_colors = '' %}
-
-                                    {% for variant in product.variants %}
-                                      {% assign color_value = variant.options[color_index] %}
-
-                                      {% unless shown_colors contains color_value %}
-                                        <button
-                                          class="bundle-steps__swatch"
-                                          data-variant-id="{{ variant.id }}"
-                                          data-product-id="{{ product.id }}"
-                                        >
-                                          {% if variant.image %}
-                                            {{
-                                              variant.image
-                                              | image_url: width: 40
-                                              | image_tag: class: 'bundle-steps__swatch-img', loading: 'lazy'
-                                            }}
-                                          {% endif %}
-
-                                          <span class="bundle-steps__swatch-label">
-                                            {{ color_value }}
-                                          </span>
-                                        </button>
-
-                                        {% assign shown_colors = shown_colors | append: color_value | append: ',' %}
-                                      {% endunless %}
-                                    {% endfor %}
-                                  {% endif %}
-                                </div>
-
-                                <div class="bundle-steps__product-footer">
-                                  <div class="bundle-steps__qty-control">
-                                    <button
-                                      type="button"
-                                      class="bundle-steps__qty-btn"
-                                      data-action="decrease"
-                                    >
-                                      -
-                                    </button>
-
-                                    <span class="bundle-steps__qty-value">0</span>
-
-                                    <button
-                                      type="button"
-                                      class="bundle-steps__qty-btn"
-                                      data-action="increase"
-                                    >
-                                      +
-                                    </button>
-                                  </div>
-
-                                  <div class="bundle-steps__price">
-                                    {%- if product.compare_at_price_max > product.price -%}
-                                      <span class="bundle-steps__compare-at">
-                                        {{ product.compare_at_price_max | money }}
-                                      </span>
-                                    {%- endif -%}
-
-                                    <span class="bundle-steps__final-price">
-                                      {{ product.price | money }}
-                                    </span>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          {%- endfor -%}
-                        </div>
-
-                        {% if block.settings.next_button_label != blank %}
-                          <div class="bundle-steps__card-footer">
-                            <button
-                              type="button"
-                              class="bundle-steps__primary-btn"
-                            >
-                              {{ block.settings.next_button_label }}
-                            </button>
-                          </div>
-                        {% endif %}
-                      </div>
-
-                    {%- else -%}
-                      <p class="bundle-steps__empty">Select a collection for this step to see its products here.</p>
-                    {%- endif -%}
-                  </div>
-                </div>
-              </details>
-            {%- endfor -%}
-          </div>
-
-        {%- else -%}
-          <p class="bundle-steps__empty">Add blocks to configure your bundle steps.</p>
-        {%- endif -%}
-      </div>
-
-      <div class="bundle-steps__right"></div>
-    </div>
-  </section>
-</bundle-steps>
-
-
-{% comment %} <script>
-  class BundleSteps extends HTMLElement {
-    constructor() {
-      super();
-    }
-
-    connectedCallback() {
-      this.initVariantSelection();
-    }
-
-    initVariantSelection() {
-      const cards = this.querySelectorAll('.bundle-steps__product-card');
-
-      cards.forEach((card) => {
-        const defaultVariant = card.dataset.defaultVariant;
-
-        // set default variant
-        card.dataset.variantId = defaultVariant;
-
-        const swatches = card.querySelectorAll('.bundle-steps__swatch');
-
-        // auto select first swatch if exists
-        if (swatches.length) {
-          swatches[0].classList.add('is-selected');
-          card.dataset.variantId = swatches[0].dataset.variantId;
-        }
-
-        swatches.forEach((swatch) => {
-          swatch.addEventListener('click', () => {
-            const variantId = swatch.dataset.variantId;
-
-            // update selected variant
-            card.dataset.variantId = variantId;
-
-            // remove active from all swatches
-            swatches.forEach((s) => s.classList.remove('is-selected'));
-
-            // add active class
-            swatch.classList.add('is-selected');
-          });
-        });
-      });
-    }
-  }
-
-  if (!customElements.get('bundle-steps')) {
-    customElements.define('bundle-steps', BundleSteps);
-  }
-</script> {% endcomment %}
-
-<script>
-  class BundleSteps extends HTMLElement {
-    constructor() {
-      super();
-      this.state = {};
-    }
-
-    connectedCallback() {
-      this.initSwatches();
-      this.initQuantity();
-      this.initNextButtons();
-    }
-
-    getStepId(card) {
-      const accordion = card.closest('.bundle-steps__accordion-item');
-
-      if (!accordion.dataset.stepId) {
-        accordion.dataset.stepId = Math.random().toString(36).substring(2, 9);
-      }
-
-      return accordion.dataset.stepId;
-    }
-
-    getStateKey(card, variantId) {
-      const stepId = this.getStepId(card);
-      const productId = card.dataset.productId;
-      return `${stepId}-${productId}-${variantId}`;
-    }
-
-    initSwatches() {
-      this.querySelectorAll('.bundle-steps__swatch').forEach((swatch) => {
-        swatch.addEventListener('click', () => {
-          const variantId = swatch.dataset.variantId;
-          const card = swatch.closest('.bundle-steps__product-card');
-          const qtyEl = card.querySelector('.bundle-steps__qty-value');
-
-          card.dataset.variantId = variantId;
-
-          const key = this.getStateKey(card, variantId);
-
-          if (!this.state[key]) {
-            this.state[key] = 0;
-          }
-
-          qtyEl.textContent = this.state[key];
-        });
-      });
-    }
-
-    initQuantity() {
-      this.querySelectorAll('.bundle-steps__qty-btn').forEach((btn) => {
-        btn.addEventListener('click', () => {
-          const action = btn.dataset.action;
-          const card = btn.closest('.bundle-steps__product-card');
-          const qtyEl = card.querySelector('.bundle-steps__qty-value');
-
-          let variantId = card.dataset.variantId;
-          const hasVariants = card.dataset.hasVariants === 'true';
-
-          if (!variantId) {
-            if (!hasVariants) {
-              variantId = card.dataset.defaultVariant;
-              card.dataset.variantId = variantId;
-            } else {
-              return;
-            }
-          }
-
-          const key = this.getStateKey(card, variantId);
-
-          if (!this.state[key]) {
-            this.state[key] = 0;
-          }
-
-          if (action === 'increase') {
-            this.state[key]++;
-          }
-
-          if (action === 'decrease' && this.state[key] > 0) {
-            this.state[key]--;
-          }
-
-          qtyEl.textContent = this.state[key];
-
-          this.updateVariantHighlight(card);
-          this.updateCounter(card);
-        });
-      });
-    }
-
-    updateVariantHighlight(card) {
-      const swatches = card.querySelectorAll('.bundle-steps__swatch');
-
-      swatches.forEach((swatch) => {
-        const variantId = swatch.dataset.variantId;
-        const key = this.getStateKey(card, variantId);
-
-        if (this.state[key] > 0) {
-          swatch.classList.add('is-selected');
-        } else {
-          swatch.classList.remove('is-selected');
-        }
-      });
-    }
-
-    updateCounter(card) {
-      const accordion = card.closest('.bundle-steps__accordion-item');
-      const counter = accordion.querySelector('.bundle-steps__selected-count-value');
-
-      const stepId = this.getStepId(card);
-
-      let total = 0;
-
-      Object.keys(this.state).forEach((key) => {
-        if (key.startsWith(stepId)) {
-          total += this.state[key];
-        }
-      });
-
-      counter.textContent = total;
-    }
-
-    initNextButtons() {
-      this.querySelectorAll('.bundle-steps__primary-btn').forEach((btn) => {
-        btn.addEventListener('click', () => {
-          const currentAccordion = btn.closest('.bundle-steps__accordion-item');
-          const nextAccordion = currentAccordion.nextElementSibling?.nextElementSibling;
-
-          if (nextAccordion && nextAccordion.tagName === 'DETAILS') {
-            currentAccordion.removeAttribute('open');
-
-            nextAccordion.setAttribute('open', '');
-
-            nextAccordion.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start',
-            });
-          }
-        });
-      });
-    }
-  }
-
-  customElements.define('bundle-steps', BundleSteps);
-</script> 
-
 {% stylesheet %}
-  /* ORIGINAL CSS */
 
   .bundle-steps {
     background:#f4f6fb;
@@ -651,6 +257,351 @@
     }
   }
 {% endstylesheet %}
+
+<bundle-steps>
+  {%- liquid
+    assign padding_top = section.settings.padding_top | default: 40
+    assign padding_bottom = section.settings.padding_bottom | default: 40
+    assign margin_top = section.settings.margin_top | default: 0
+    assign margin_bottom = section.settings.margin_bottom | default: 0
+  -%}
+
+  <section
+    class="bundle-steps"
+    style="
+      padding-top: {{ padding_top }}px;
+      padding-bottom: {{ padding_bottom }}px;
+      margin-top: {{ margin_top }}px;
+      margin-bottom: {{ margin_bottom }}px;
+    "
+  >
+    <div class="bundle-steps__inner">
+      <div class="bundle-steps__left">
+        {%- if section.blocks.size > 0 -%}
+          {%- assign total_steps = section.blocks.size -%}
+
+          <div class="bundle-steps__accordion-list">
+            {%- for block in section.blocks -%}
+              {%- assign step_collection = collections[block.settings.collection] -%}
+
+              <div class="bundle-steps__accordion-step-label">STEP {{ forloop.index }} OF {{ total_steps }}</div>
+
+              <details
+                class="bundle-steps__accordion-item"
+                name="bundle-accordion"
+                {% if forloop.first %}
+                  open
+                {% endif %}
+                {{ block.shopify_attributes }}
+              >
+                <summary class="bundle-steps__accordion-header">
+                  <div class="bundle-steps__accordion-left">
+                    <div class="bundle-steps__accordion-title">
+                      {{ block.settings.step_heading }}
+                    </div>
+                  </div>
+
+                  <div class="bundle-steps__accordion-right">
+                    <span class="bundle-steps__selected-count">
+                      <span class="bundle-steps__selected-count-value">0</span>
+                      <span>selected</span>
+                    </span>
+
+                    <span class="bundle-steps__accordion-chevron"> ⌄ </span>
+                  </div>
+                </summary>
+
+                <div class="bundle-steps__accordion-body">
+                  <div class="bundle-steps__card-body">
+                    {%- if step_collection and step_collection.products_count > 0 -%}
+                      <div class="bundle-steps__products-panel">
+                        <div class="bundle-steps__products-grid">
+                          {%- for product in step_collection.products limit: 5 -%}
+                            <div
+                              class="bundle-steps__product-card"
+                              data-product-id="{{ product.id }}"
+                              data-default-variant="{{ product.first_available_variant.id }}"
+                              data-has-variants="{% if product.variants.size > 1 %}true{% else %}false{% endif %}"
+                            >
+                              <div class="bundle-steps__product-media">
+                                {%- if product.featured_image -%}
+                                  {{
+                                    product.featured_image
+                                    | image_url: width: 400
+                                    | image_tag: loading: 'lazy', class: 'bundle-steps__product-image'
+                                  }}
+                                {%- endif -%}
+                              </div>
+
+                              <div class="bundle-steps__product-content">
+                                <h3 class="bundle-steps__product-title">
+                                  {{ product.title }}
+                                </h3>
+
+                                {%- if product.description != blank -%}
+                                  <p class="bundle-steps__product-description">
+                                    {{ product.description | strip_html | truncate: 80 }}
+                                  </p>
+                                {%- endif -%}
+
+                                <div class="bundle-steps__product-options">
+                                  {% assign color_index = null %}
+
+                                  {% for option in product.options %}
+                                    {% assign option_name = option | downcase %}
+                                    {% if option_name contains 'color' %}
+                                      {% assign color_index = forloop.index0 %}
+                                    {% endif %}
+                                  {% endfor %}
+
+                                  {% if color_index != null %}
+                                    {% assign shown_colors = '' %}
+
+                                    {% for variant in product.variants %}
+                                      {% assign color_value = variant.options[color_index] %}
+
+                                      {% unless shown_colors contains color_value %}
+                                        <button
+                                          class="bundle-steps__swatch"
+                                          data-variant-id="{{ variant.id }}"
+                                          data-product-id="{{ product.id }}"
+                                        >
+                                          {% if variant.image %}
+                                            {{
+                                              variant.image
+                                              | image_url: width: 40
+                                              | image_tag: class: 'bundle-steps__swatch-img', loading: 'lazy'
+                                            }}
+                                          {% endif %}
+
+                                          <span class="bundle-steps__swatch-label">
+                                            {{ color_value }}
+                                          </span>
+                                        </button>
+
+                                        {% assign shown_colors = shown_colors | append: color_value | append: ',' %}
+                                      {% endunless %}
+                                    {% endfor %}
+                                  {% endif %}
+                                </div>
+
+                                <div class="bundle-steps__product-footer">
+                                  <div class="bundle-steps__qty-control">
+                                    <button
+                                      type="button"
+                                      class="bundle-steps__qty-btn"
+                                      data-action="decrease"
+                                    >
+                                      -
+                                    </button>
+
+                                    <span class="bundle-steps__qty-value">0</span>
+
+                                    <button
+                                      type="button"
+                                      class="bundle-steps__qty-btn"
+                                      data-action="increase"
+                                    >
+                                      +
+                                    </button>
+                                  </div>
+
+                                  <div class="bundle-steps__price">
+                                    {%- if product.compare_at_price_max > product.price -%}
+                                      <span class="bundle-steps__compare-at">
+                                        {{ product.compare_at_price_max | money }}
+                                      </span>
+                                    {%- endif -%}
+
+                                    <span class="bundle-steps__final-price">
+                                      {{ product.price | money }}
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          {%- endfor -%}
+                        </div>
+
+                        {% if block.settings.next_button_label != blank %}
+                          <div class="bundle-steps__card-footer">
+                            <button
+                              type="button"
+                              class="bundle-steps__primary-btn"
+                            >
+                              {{ block.settings.next_button_label }}
+                            </button>
+                          </div>
+                        {% endif %}
+                      </div>
+
+                    {%- else -%}
+                      <p class="bundle-steps__empty">Select a collection for this step to see its products here.</p>
+                    {%- endif -%}
+                  </div>
+                </div>
+              </details>
+            {%- endfor -%}
+          </div>
+
+        {%- else -%}
+          <p class="bundle-steps__empty">Add blocks to configure your bundle steps.</p>
+        {%- endif -%}
+      </div>
+
+      <div class="bundle-steps__right"></div>
+    </div>
+  </section>
+</bundle-steps>
+
+
+<script>
+  class BundleSteps extends HTMLElement {
+    constructor() {
+      super();
+      this.state = {};
+    }
+
+    connectedCallback() {
+      this.initSwatches();
+      this.initQuantity();
+      this.initNextButtons();
+    }
+
+    getStepId(card) {
+      const accordion = card.closest('.bundle-steps__accordion-item');
+
+      if (!accordion.dataset.stepId) {
+        accordion.dataset.stepId = Math.random().toString(36).substring(2, 9);
+      }
+
+      return accordion.dataset.stepId;
+    }
+
+    getStateKey(card, variantId) {
+      const stepId = this.getStepId(card);
+      const productId = card.dataset.productId;
+      return `${stepId}-${productId}-${variantId}`;
+    }
+
+    initSwatches() {
+      this.querySelectorAll('.bundle-steps__swatch').forEach((swatch) => {
+        swatch.addEventListener('click', () => {
+          const variantId = swatch.dataset.variantId;
+          const card = swatch.closest('.bundle-steps__product-card');
+          const qtyEl = card.querySelector('.bundle-steps__qty-value');
+
+          card.dataset.variantId = variantId;
+
+          const key = this.getStateKey(card, variantId);
+
+          if (!this.state[key]) {
+            this.state[key] = 0;
+          }
+
+          qtyEl.textContent = this.state[key];
+        });
+      });
+    }
+
+    initQuantity() {
+      this.querySelectorAll('.bundle-steps__qty-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const action = btn.dataset.action;
+          const card = btn.closest('.bundle-steps__product-card');
+          const qtyEl = card.querySelector('.bundle-steps__qty-value');
+
+          let variantId = card.dataset.variantId;
+          const hasVariants = card.dataset.hasVariants === 'true';
+
+          if (!variantId) {
+            if (!hasVariants) {
+              variantId = card.dataset.defaultVariant;
+              card.dataset.variantId = variantId;
+            } else {
+              return;
+            }
+          }
+
+          const key = this.getStateKey(card, variantId);
+
+          if (!this.state[key]) {
+            this.state[key] = 0;
+          }
+
+          if (action === 'increase') {
+            this.state[key]++;
+          }
+
+          if (action === 'decrease' && this.state[key] > 0) {
+            this.state[key]--;
+          }
+
+          qtyEl.textContent = this.state[key];
+
+          this.updateVariantHighlight(card);
+          this.updateCounter(card);
+        });
+      });
+    }
+
+    updateVariantHighlight(card) {
+      const swatches = card.querySelectorAll('.bundle-steps__swatch');
+
+      swatches.forEach((swatch) => {
+        const variantId = swatch.dataset.variantId;
+        const key = this.getStateKey(card, variantId);
+
+        if (this.state[key] > 0) {
+          swatch.classList.add('is-selected');
+        } else {
+          swatch.classList.remove('is-selected');
+        }
+      });
+    }
+
+    updateCounter(card) {
+      const accordion = card.closest('.bundle-steps__accordion-item');
+      const counter = accordion.querySelector('.bundle-steps__selected-count-value');
+
+      const stepId = this.getStepId(card);
+
+      let total = 0;
+
+      Object.keys(this.state).forEach((key) => {
+        if (key.startsWith(stepId)) {
+          total += this.state[key];
+        }
+      });
+
+      counter.textContent = total;
+    }
+
+    initNextButtons() {
+      this.querySelectorAll('.bundle-steps__primary-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const currentAccordion = btn.closest('.bundle-steps__accordion-item');
+          const nextAccordion = currentAccordion.nextElementSibling?.nextElementSibling;
+
+          if (nextAccordion && nextAccordion.tagName === 'DETAILS') {
+            currentAccordion.removeAttribute('open');
+
+            nextAccordion.setAttribute('open', '');
+
+            nextAccordion.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+            });
+          }
+        });
+      });
+    }
+  }
+
+  customElements.define('bundle-steps', BundleSteps);
+</script> 
+
+
 
 {% schema %}
 {
