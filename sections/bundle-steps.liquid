@@ -1,572 +1,382 @@
 {% stylesheet %}
-    .bundle-steps {
-      background:#f4f6fb;
-    }
+  .bundle-steps{
+  background:#f4f6fb;
+  }
 
-    .bundle-steps__inner {
-      max-width:1400px;
-      margin:0 auto;
-      display:grid;
-      grid-template-columns:3fr 2fr;
-      gap:28px;
-    }
+  .bundle-steps__inner{
+  max-width:1400px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:3fr 2fr;
+  gap:28px;
+  }
 
-    .bundle-steps__left {
-      display:flex;
-      flex-direction:column;
-      gap:18px;
-    }
+  .bundle-steps__left{
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  }
 
-    .bundle-steps__accordion-list {
-      background:#fff;
-      border-radius:14px;
-      border:1px solid #e4e7f5;
-      padding:20px;
-    }
+  .bundle-steps__accordion-list{
+  background:#fff;
+  border-radius:14px;
+  border:1px solid #e4e7f5;
+  padding:20px;
+  }
 
-    .bundle-steps__accordion-step-label {
-      font-size:11px;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      color:#a0aac6;
-      font-weight:600;
-      margin-bottom:8px;
-    }
+  .bundle-steps__accordion-step-label{
+  font-size:11px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:#a0aac6;
+  font-weight:600;
+  margin-bottom:8px;
+  }
 
-    .bundle-steps__accordion-item {
-      border-top:1px solid #e4e7f5;
-      border-bottom:1px solid #e4e7f5;
-      overflow:hidden;
-      margin-bottom:14px;
-      background:#fff;
-    }
+  .bundle-steps__accordion-item{
+  border-top:1px solid #e4e7f5;
+  border-bottom:1px solid #e4e7f5;
+  overflow:hidden;
+  margin-bottom:14px;
+  background:#fff;
+  }
 
-    .bundle-steps__accordion-header {
-      padding:16px 18px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      cursor:pointer;
-    }
+  .bundle-steps__accordion-header{
+  padding:16px 18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  cursor:pointer;
+  }
 
-    .bundle-steps__accordion-header::-webkit-details-marker {
-      display:none;
-    }
+  .bundle-steps__accordion-title{
+  font-size:18px;
+  font-weight:700;
+  color:#111;
+  }
 
-    .bundle-steps__accordion-title {
-      font-size:18px;
-      font-weight:700;
-      color:#111;
-    }
+  .bundle-steps__accordion-right{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:#3657ff;
+  font-weight:600;
+  }
 
-    .bundle-steps__accordion-right {
-      display:flex;
-      align-items:center;
-      gap:10px;
-      color:#3657ff;
-      font-weight:600;
-    }
+  .bundle-steps__selected-count{
+  display:none;
+  font-size:14px;
+  }
 
-    .bundle-steps__selected-count {
-      display:none;
-      font-size:14px;
-    }
+  .bundle-steps__accordion-item[open] .bundle-steps__selected-count{
+  display:inline-flex;
+  }
 
-    .bundle-steps__accordion-chevron {
-      transition:transform .3s ease;
-      font-size:18px;
-    }
+  .bundle-steps__products-panel{
+  background:#f5f7ff;
+  padding:22px;
+  display:flex;
+  flex-direction:column;
+  gap:24px;
+  }
 
-    .bundle-steps__accordion-item[open] .bundle-steps__accordion-chevron {
-      transform:rotate(180deg);
-    }
+  .bundle-steps__products-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+  }
 
-    .bundle-steps__accordion-item[open] .bundle-steps__selected-count {
-      display:inline-flex;
-    }
+  .bundle-steps__product-card{
+  background:#fff;
+  border-radius:16px;
+  padding:8px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  box-shadow:0 2px 6px rgba(0,0,0,.05);
+  }
 
-    .bundle-steps__products-panel {
-      background:#f5f7ff;
-      padding:22px;
-      display:flex;
-      flex-direction:column;
-      gap:24px;
-    }
+  .bundle-steps__product-media{
+  height:140px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  }
 
-    .bundle-steps__products-grid {
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:20px;
-    }
+  .bundle-steps__product-image{
+  height:100%;
+  width:100%;
+  object-fit:contain;
+  }
 
-    .bundle-steps__product-card {
-      background:#fff;
-      border-radius:16px;
-      padding:8px;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      transition:.25s;
-      box-shadow:0 2px 6px rgba(0,0,0,.05);
-      justify-content:space-evenly;
-    }
+  .bundle-steps__product-title{
+  font-size:14px;
+  font-weight:600;
+  color:#111;
+  }
 
-    .bundle-steps__product-card:hover {
-      box-shadow:0 6px 16px rgba(54,87,255,.2);
-      transform:translateY(-2px);
-    }
+  .bundle-steps__product-options{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  }
 
-    .bundle-steps__product-media {
-      height:140px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
+  .bundle-steps__swatch{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:3px 6px;
+  border:1px solid #dbe1f3;
+  border-radius:6px;
+  background:#fff;
+  cursor:pointer;
+  font-size:12px;
+  }
 
-    .bundle-steps__product-image {
-      height:100%;
-      width:100%;
-      object-fit:contain;
-    }
+  .bundle-steps__swatch.is-selected{
+  border-color:#0AA288;
+  background:#1DF0BB0A;
+  }
 
-    .bundle-steps__product-title {
-      font-size:14px;
-      font-weight:600;
-      color:#111;
-      margin-bottom:5px;
-    }
+  .bundle-steps__product-footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:8px;
+  }
 
-    .bundle-steps__product-description {
-      font-size:12px;
-      color:#7b88a8;
-      line-height:1.4;
-      min-height:34px;
-      margin-bottom:4px;
-    }
+  .bundle-steps__qty-control{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  }
 
-    .bundle-steps__product-options {
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-    }
+  .bundle-steps__qty-btn{
+  width:18px;
+  height:18px;
+  border-radius:6px;
+  border:1px solid #dbe1f3;
+  background:#fff;
+  font-weight:700;
+  cursor:pointer;
+  }
 
-    .bundle-steps__swatch {
-      display:flex;
-      align-items:center;
-      gap:6px;
-      padding:3px 5px;
-      border:1px solid #dbe1f3;
-      border-radius:6px;
-      background:#fff;
-      cursor:pointer;
-      font-size:12px;
-    }
+  .bundle-steps__qty-value{
+  font-size:14px;
+  font-weight:600;
+  }
 
-    .bundle-steps__swatch-img {
-      width:16px;
-      height:16px;
-    }
+  .bundle-steps__price{
+  text-align:right;
+  }
 
-    .bundle-steps__swatch:hover {
-      border-color:#3657ff;
-    }
+  .bundle-steps__final-price{
+  font-weight:700;
+  color:#3657ff;
+  }
 
-    .bundle-steps__product-footer {
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-top:8px;
-    }
-
-    .bundle-steps__qty-control {
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:6px;
-    }
-
-    .bundle-steps__qty-btn {
-      width:18px;
-      height:18px;
-      border-radius:6px;
-      border:1px solid #dbe1f3;
-      background:#fff;
-      font-weight:700;
-      cursor:pointer;
-    }
-
-    .bundle-steps__qty-value {
-      font-size:14px;
-      font-weight:600;
-      text-align:center;
-    }
-
-    .bundle-steps__price {
-      text-align:right;
-    }
-
-    .bundle-steps__compare-at {
-      font-size:11px;
-      text-decoration:line-through;
-      color:#a0aac6;
-      margin-right:4px;
-    }
-
-    .bundle-steps__final-price {
-      font-weight:700;
-      color:#3657ff;
-    }
-
-    .bundle-steps__card_footer {
-      display:flex;
-      justify-content:center;
-    }
-
-    .bundle-steps__primary-btn {
-      border-radius:999px;
-      border:1px solid #b8c2ff;
-      background:#f5f7ff;
-      color:#3657ff;
-      padding:10px 24px;
-      font-weight:700;
-      cursor:pointer;
-      transition:.25s;
-    }
-
-    .bundle-steps__primary-btn:hover {
-      background:#e0e6ff;
-    }
-
-    .bundle-steps__card-footer {
-      text-align:center;
-    }
-
-    .bundle-steps__swatch.is-selected {
-      border-color: #0AA288;
-      background: #1DF0BB0A;
-    }
-    .bundle-review{
-    background:#eef2fb;
-    border-radius:16px;
-    padding:22px;
-    position:sticky;
-    top:40px;
+  .bundle-review{
+  background:#eef2fb;
+  border-radius:16px;
+  padding:22px;
+  position:sticky;
+  top:40px;
   }
 
   .bundle-review__label{
-    font-size:11px;
-    letter-spacing:.1em;
-    color:#94a0c3;
-    font-weight:600;
-  }
-
-  .bundle-review h3{
-    margin:6px 0;
-    font-size:18px;
+  font-size:11px;
+  letter-spacing:.1em;
+  color:#94a0c3;
+  font-weight:600;
   }
 
   .bundle-review__desc{
-    font-size:13px;
-    color:#7b88a8;
-    margin-bottom:16px;
+  font-size:13px;
+  color:#7b88a8;
+  margin-bottom:16px;
   }
 
   .bundle-review__section{
-    margin-bottom:16px;
+  margin-bottom:16px;
   }
 
   .bundle-review__title{
-    font-size:11px;
-    font-weight:700;
-    color:#a0aac6;
-    margin-bottom:6px;
+  font-size:11px;
+  font-weight:700;
+  color:#a0aac6;
+  margin-bottom:6px;
   }
 
   .bundle-review__item{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:6px 0;
-    font-size:14px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:6px 0;
+  font-size:14px;
   }
 
   .bundle-review__qty{
-    display:flex;
-    gap:6px;
-    align-items:center;
+  display:flex;
+  gap:6px;
+  align-items:center;
   }
 
   .bundle-review__qty button{
-    width:20px;
-    height:20px;
-    border-radius:6px;
-    border:1px solid #dbe1f3;
-    background:#fff;
-    cursor:pointer;
-  }
-
-  .bundle-review__static{
-    display:flex;
-    justify-content:space-between;
-    font-size:14px;
-    padding:4px 0;
+  width:20px;
+  height:20px;
+  border-radius:6px;
+  border:1px solid #dbe1f3;
+  background:#fff;
+  cursor:pointer;
   }
 
   .bundle-review__shipping{
-    display:flex;
-    justify-content:space-between;
-    padding:10px 0;
-    border-top:1px solid #e4e7f5;
+  display:flex;
+  justify-content:space-between;
+  padding:10px 0;
+  border-top:1px solid #e4e7f5;
   }
 
   .bundle-review__total{
-    display:flex;
-    justify-content:space-between;
-    align-items:end;
-    margin-top:10px;
-  }
-
-  .bundle-review__old{
-    text-decoration:line-through;
-    color:#9aa4c4;
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  margin-top:10px;
   }
 
   .bundle-review__price{
-    font-size:22px;
-    font-weight:700;
-    color:#3657ff;
+  font-size:22px;
+  font-weight:700;
+  color:#3657ff;
   }
 
   .bundle-review__checkout{
-    width:100%;
-    margin-top:16px;
-    background:#5c4cf4;
-    color:#fff;
-    border:none;
-    border-radius:10px;
-    padding:14px;
-    font-weight:700;
-    cursor:pointer;
+  width:100%;
+  margin-top:16px;
+  background:#5c4cf4;
+  color:#fff;
+  border:none;
+  border-radius:10px;
+  padding:14px;
+  font-weight:700;
+  cursor:pointer;
   }
-
-    @media(max-width:1024px){
-      .bundle-steps__inner{
-        grid-template-columns:1fr;
-      }
-
-      .bundle-steps__products-grid{
-        grid-template-columns:repeat(2,1fr);
-      }
-    }
 {% endstylesheet %}
 
 <bundle-steps>
-  {%- liquid
-    assign padding_top = section.settings.padding_top | default: 40
-    assign padding_bottom = section.settings.padding_bottom | default: 40
-    assign margin_top = section.settings.margin_top | default: 0
-    assign margin_bottom = section.settings.margin_bottom | default: 0
-  -%}
-
-  <section
-    class="bundle-steps"
-    style="
-      padding-top: {{ padding_top }}px;
-      padding-bottom: {{ padding_bottom }}px;
-      margin-top: {{ margin_top }}px;
-      margin-bottom: {{ margin_bottom }}px;
-    "
-  >
+  <section class="bundle-steps">
     <div class="bundle-steps__inner">
       <div class="bundle-steps__left">
-        {%- if section.blocks.size > 0 -%}
-          {%- assign total_steps = section.blocks.size -%}
-
+        {% if section.blocks.size > 0 %}
           <div class="bundle-steps__accordion-list">
-            {%- for block in section.blocks -%}
-              {%- assign step_collection = collections[block.settings.collection] -%}
+            {% for block in section.blocks %}
+              {% assign step_collection = collections[block.settings.collection] %}
 
-              <div class="bundle-steps__accordion-step-label">STEP {{ forloop.index }} OF {{ total_steps }}</div>
+              <div class="bundle-steps__accordion-step-label">
+                STEP {{ forloop.index }} OF {{ section.blocks.size }}
+              </div>
 
               <details
                 class="bundle-steps__accordion-item"
-                name="bundle-accordion"
                 {% if forloop.first %}
                   open
                 {% endif %}
-                {{ block.shopify_attributes }}
               >
                 <summary class="bundle-steps__accordion-header">
-                  <div class="bundle-steps__accordion-left">
-                    <div class="bundle-steps__accordion-title">
-                      {{ block.settings.step_heading }}
-                    </div>
+                  <div class="bundle-steps__accordion-title">
+                    {{ block.settings.step_heading }}
                   </div>
 
                   <div class="bundle-steps__accordion-right">
                     <span class="bundle-steps__selected-count">
-                      <span class="bundle-steps__selected-count-value">0</span>
-                      <span>selected</span>
+                      <span class="bundle-steps__selected-count-value">0</span> selected
                     </span>
-
-                    <span class="bundle-steps__accordion-chevron"> ⌄ </span>
                   </div>
                 </summary>
 
-                <div class="bundle-steps__accordion-body">
-                  <div class="bundle-steps__card-body">
-                    {%- if step_collection and step_collection.products_count > 0 -%}
-                      <div class="bundle-steps__products-panel">
-                        <div class="bundle-steps__products-grid">
-                          {%- for product in step_collection.products limit: 5 -%}
-                            <div
-                              <div
-                              class="bundle-steps__product-card"
-                              data-product-id="{{ product.id }}"
-                              data-step-title="{{ block.settings.step_heading }}"
-                              data-default-variant="{{ product.first_available_variant.id }}"
-                              data-has-variants="{% if product.variants.size > 1 %}true{% else %}false{% endif %}"
-                            >
-                              <div class="bundle-steps__product-media">
-                                {%- if product.featured_image -%}
-                                  {{
-                                    product.featured_image
-                                    | image_url: width: 400
-                                    | image_tag: loading: 'lazy', class: 'bundle-steps__product-image'
-                                  }}
-                                {%- endif -%}
-                              </div>
-
-                              <div class="bundle-steps__product-content">
-                                <h3 class="bundle-steps__product-title">
-                                  {{ product.title }}
-                                </h3>
-
-                                {%- if product.description != blank -%}
-                                  <p class="bundle-steps__product-description">
-                                    {{ product.description | strip_html | truncate: 80 }}
-                                  </p>
-                                {%- endif -%}
-
-                                <div class="bundle-steps__product-options">
-                                  {% assign color_index = null %}
-
-                                  {% for option in product.options %}
-                                    {% assign option_name = option | downcase %}
-                                    {% if option_name contains 'color' %}
-                                      {% assign color_index = forloop.index0 %}
-                                    {% endif %}
-                                  {% endfor %}
-
-                                  {% if color_index != null %}
-                                    {% assign shown_colors = '' %}
-
-                                    {% for variant in product.variants %}
-                                      {% assign color_value = variant.options[color_index] %}
-
-                                      {% unless shown_colors contains color_value %}
-                                        <button
-                                          class="bundle-steps__swatch"
-                                          data-variant-id="{{ variant.id }}"
-                                          data-product-id="{{ product.id }}"
-                                        >
-                                          {% if variant.image %}
-                                            {{
-                                              variant.image
-                                              | image_url: width: 40
-                                              | image_tag: class: 'bundle-steps__swatch-img', loading: 'lazy'
-                                            }}
-                                          {% endif %}
-
-                                          <span class="bundle-steps__swatch-label">
-                                            {{ color_value }}
-                                          </span>
-                                        </button>
-
-                                        {% assign shown_colors = shown_colors | append: color_value | append: ',' %}
-                                      {% endunless %}
-                                    {% endfor %}
-                                  {% endif %}
-                                </div>
-
-                                <div class="bundle-steps__product-footer">
-                                  <div class="bundle-steps__qty-control">
-                                    <button
-                                      type="button"
-                                      class="bundle-steps__qty-btn"
-                                      data-action="decrease"
-                                    >
-                                      -
-                                    </button>
-
-                                    <span class="bundle-steps__qty-value">0</span>
-
-                                    <button
-                                      type="button"
-                                      class="bundle-steps__qty-btn"
-                                      data-action="increase"
-                                    >
-                                      +
-                                    </button>
-                                  </div>
-
-                                  <div class="bundle-steps__price">
-                                    {%- if product.compare_at_price_max > product.price -%}
-                                      <span class="bundle-steps__compare-at">
-                                        {{ product.compare_at_price_max | money }}
-                                      </span>
-                                    {%- endif -%}
-
-                                    <span class="bundle-steps__final-price">
-                                      {{ product.price | money }}
-                                    </span>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          {%- endfor -%}
+                <div class="bundle-steps__products-panel">
+                  <div class="bundle-steps__products-grid">
+                    {% for product in step_collection.products limit: 5 %}
+                      <div
+                        class="bundle-steps__product-card"
+                        data-product-id="{{ product.id }}"
+                        data-step-title="{{ block.settings.step_heading }}"
+                        data-default-variant="{{ product.first_available_variant.id }}"
+                        data-has-variants="{% if product.variants.size > 1 %}true{% else %}false{% endif %}"
+                      >
+                        <div class="bundle-steps__product-media">
+                          {{
+                            product.featured_image
+                            | image_url: width: 400
+                            | image_tag: class: 'bundle-steps__product-image'
+                          }}
                         </div>
 
-                        {% if block.settings.next_button_label != blank %}
-                          <div class="bundle-steps__card-footer">
+                        <h3 class="bundle-steps__product-title">
+                          {{ product.title }}
+                        </h3>
+
+                        <div class="bundle-steps__product-options">
+                          {% for variant in product.variants %}
                             <button
-                              type="button"
-                              class="bundle-steps__primary-btn"
+                              class="bundle-steps__swatch"
+                              data-variant-id="{{ variant.id }}"
+                              data-product-id="{{ product.id }}"
                             >
-                              {{ block.settings.next_button_label }}
+                              {{ variant.title }}
+                            </button>
+                          {% endfor %}
+                        </div>
+
+                        <div class="bundle-steps__product-footer">
+                          <div class="bundle-steps__qty-control">
+                            <button
+                              class="bundle-steps__qty-btn"
+                              data-action="decrease"
+                            >
+                              -
+                            </button>
+
+                            <span class="bundle-steps__qty-value">0</span>
+
+                            <button
+                              class="bundle-steps__qty-btn"
+                              data-action="increase"
+                            >
+                              +
                             </button>
                           </div>
-                        {% endif %}
-                      </div>
 
-                    {%- else -%}
-                      <p class="bundle-steps__empty">Select a collection for this step to see its products here.</p>
-                    {%- endif -%}
+                          <div class="bundle-steps__price">
+                            <span class="bundle-steps__final-price">
+                              {{ product.price | money }}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    {% endfor %}
                   </div>
                 </div>
               </details>
-            {%- endfor -%}
+            {% endfor %}
           </div>
-
-        {%- else -%}
-          <p class="bundle-steps__empty">Add blocks to configure your bundle steps.</p>
-        {%- endif -%}
+        {% endif %}
       </div>
 
       <div class="bundle-steps__right">
         <div class="bundle-review">
-          <div class="bundle-review__header">
-            <p class="bundle-review__label">REVIEW</p>
-            <h3>Your security system</h3>
-            <p class="bundle-review__desc">
-              Review your personalized protection system designed to keep what matters most safe.
-            </p>
-          </div>
+          <p class="bundle-review__label">REVIEW</p>
+
+          <h3>Your security system</h3>
+
+          <p class="bundle-review__desc">
+            Review your personalized protection system designed to keep what matters most safe.
+          </p>
 
           <div class="bundle-review__shipping">Fast Shipping <span>FREE</span></div>
 
           <div class="bundle-review__total">
-            <div class="bundle-review__old">$238.81</div>
+            <div>Total</div>
             <div class="bundle-review__price" data-total-price>$0.00</div>
           </div>
 
@@ -587,43 +397,35 @@
     connectedCallback() {
       this.initSwatches();
       this.initQuantity();
-      this.initNextButtons();
       this.initReviewButtons();
-      this.updateReview();
     }
 
     getStepId(card) {
-      const accordion = card.closest('.bundle-steps__accordion-item');
+      const acc = card.closest('.bundle-steps__accordion-item');
 
-      if (!accordion.dataset.stepId) {
-        accordion.dataset.stepId = Math.random().toString(36).substring(2, 9);
+      if (!acc.dataset.stepId) {
+        acc.dataset.stepId = Math.random().toString(36).substring(2, 9);
       }
 
-      return accordion.dataset.stepId;
+      return acc.dataset.stepId;
     }
 
     getStateKey(card, variantId) {
-      const stepId = this.getStepId(card);
-      const productId = card.dataset.productId;
-      return `${stepId}-${productId}-${variantId}`;
+      return `${this.getStepId(card)}-${card.dataset.productId}-${variantId}`;
     }
 
     initSwatches() {
       this.querySelectorAll('.bundle-steps__swatch').forEach((swatch) => {
         swatch.addEventListener('click', () => {
-          const variantId = swatch.dataset.variantId;
           const card = swatch.closest('.bundle-steps__product-card');
-          const qtyEl = card.querySelector('.bundle-steps__qty-value');
 
-          card.dataset.variantId = variantId;
+          card.querySelectorAll('.bundle-steps__swatch').forEach((btn) => {
+            btn.classList.remove('is-selected');
+          });
 
-          const key = this.getStateKey(card, variantId);
+          swatch.classList.add('is-selected');
 
-          if (!this.state[key]) {
-            this.state[key] = 0;
-          }
-
-          qtyEl.textContent = this.state[key];
+          card.dataset.variantId = swatch.dataset.variantId;
         });
       });
     }
@@ -631,219 +433,127 @@
     initQuantity() {
       this.querySelectorAll('.bundle-steps__qty-btn').forEach((btn) => {
         btn.addEventListener('click', () => {
-          const action = btn.dataset.action;
           const card = btn.closest('.bundle-steps__product-card');
+
           const qtyEl = card.querySelector('.bundle-steps__qty-value');
 
           let variantId = card.dataset.variantId;
-          const hasVariants = card.dataset.hasVariants === 'true';
 
           if (!variantId) {
-            if (!hasVariants) {
-              variantId = card.dataset.defaultVariant;
-              card.dataset.variantId = variantId;
-            } else {
-              return;
-            }
+            variantId = card.dataset.defaultVariant;
+            card.dataset.variantId = variantId;
           }
 
           const key = this.getStateKey(card, variantId);
 
-          if (!this.state[key]) {
-            this.state[key] = 0;
-          }
+          if (!this.state[key]) this.state[key] = 0;
 
-          if (action === 'increase') {
-            this.state[key]++;
-          }
+          if (btn.dataset.action === 'increase') this.state[key]++;
 
-          if (action === 'decrease' && this.state[key] > 0) {
-            this.state[key]--;
-          }
+          if (btn.dataset.action === 'decrease' && this.state[key] > 0) this.state[key]--;
 
           qtyEl.textContent = this.state[key];
 
-          this.updateVariantHighlight(card);
-          this.updateCounter(card);
           this.updateReview();
         });
       });
     }
 
-    updateVariantHighlight(card) {
-      const swatches = card.querySelectorAll('.bundle-steps__swatch');
+    updateReview() {
+      const review = this.querySelector('.bundle-review');
 
-      swatches.forEach((swatch) => {
-        const variantId = swatch.dataset.variantId;
-        const key = this.getStateKey(card, variantId);
+      review.querySelectorAll('.bundle-review__dynamic').forEach((el) => el.remove());
 
-        if (this.state[key] > 0) {
-          swatch.classList.add('is-selected');
-        } else {
-          swatch.classList.remove('is-selected');
-        }
-      });
-    }
-
-    updateCounter(card) {
-      const accordion = card.closest('.bundle-steps__accordion-item');
-      const counter = accordion.querySelector('.bundle-steps__selected-count-value');
-
-      const stepId = this.getStepId(card);
-
+      let groups = {};
       let total = 0;
 
       Object.keys(this.state).forEach((key) => {
-        if (key.startsWith(stepId)) {
-          total += this.state[key];
-        }
-      });
+        const qty = this.state[key];
 
-      counter.textContent = total;
-    }
+        if (qty <= 0) return;
 
-    initNextButtons() {
-      this.querySelectorAll('.bundle-steps__primary-btn').forEach((btn) => {
-        btn.addEventListener('click', () => {
-          const currentAccordion = btn.closest('.bundle-steps__accordion-item');
-          const nextAccordion = currentAccordion.nextElementSibling?.nextElementSibling;
+        const parts = key.split('-');
+        const productId = parts[1];
 
-          if (nextAccordion && nextAccordion.tagName === 'DETAILS') {
-            currentAccordion.removeAttribute('open');
+        const card = this.querySelector(`[data-product-id="${productId}"]`);
 
-            nextAccordion.setAttribute('open', '');
+        const stepTitle = card.dataset.stepTitle;
+        const title = card.querySelector('.bundle-steps__product-title').textContent;
 
-            nextAccordion.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start',
-            });
-          }
+        const price = parseFloat(card.querySelector('.bundle-steps__final-price').textContent.replace(/[^0-9.]/g, ''));
+
+        if (!groups[stepTitle]) groups[stepTitle] = [];
+
+        groups[stepTitle].push({
+          key,
+          title,
+          qty,
+          price,
         });
-      });
-    }
 
-   updateReview() {
-
-  const reviewContainer = this.querySelector('.bundle-review');
-  if (!reviewContainer) return;
-
-  // remove old dynamic groups
-  reviewContainer.querySelectorAll('.bundle-review__dynamic').forEach(el => el.remove());
-
-  let groups = {};
-  let total = 0;
-
-  Object.keys(this.state).forEach(key => {
-
-    const qty = this.state[key];
-    if(qty <= 0) return;
-
-    const parts = key.split('-');
-    const productId = parts[1];
-
-    const card = this.querySelector(`[data-product-id="${productId}"]`);
-    if(!card) return;
-
-    const stepTitle = card.dataset.stepTitle || "Products";
-
-    const title = card.querySelector('.bundle-steps__product-title').textContent;
-    const priceText = card.querySelector('.bundle-steps__final-price').textContent;
-    const price = parseFloat(priceText.replace(/[^0-9.]/g,''));
-
-    const itemTotal = price * qty;
-    total += itemTotal;
-
-    if(!groups[stepTitle]){
-      groups[stepTitle] = [];
-    }
-
-    groups[stepTitle].push({
-      key,
-      title,
-      qty,
-      price,
-      total:itemTotal
-    });
-
-  });
-
-  const shippingSection = reviewContainer.querySelector('.bundle-review__shipping');
-
-  Object.keys(groups).forEach(stepTitle => {
-
-    const section = document.createElement('div');
-    section.className = "bundle-review__section bundle-review__dynamic";
-
-    const title = document.createElement('p');
-    title.className = "bundle-review__title";
-
-    // convert "Choose your cameras" -> "CAMERAS"
-    title.textContent = stepTitle.replace(/choose your/i,'').trim().toUpperCase();
-
-    section.appendChild(title);
-
-    groups[stepTitle].forEach(item => {
-
-      const row = document.createElement('div');
-      row.className = "bundle-review__item";
-
-      row.innerHTML = `
-        <span>${item.title}</span>
-
-        <div class="bundle-review__qty">
-          <button data-review-minus="${item.key}">-</button>
-          <span>${item.qty}</span>
-          <button data-review-plus="${item.key}">+</button>
-        </div>
-
-        <span>$${item.total.toFixed(2)}</span>
-      `;
-
-      section.appendChild(row);
-
-    });
-
-    reviewContainer.insertBefore(section, shippingSection);
-
-  });
-
-  const totalEl = this.querySelector('[data-total-price]');
-  if(totalEl){
-    totalEl.textContent = `$${total.toFixed(2)}`;
-  }
-
-}
-
-        container.appendChild(item);
+        total += price * qty;
       });
 
-      const totalEl = this.querySelector('[data-total-price]');
-      if (totalEl) {
-        totalEl.textContent = `$${total.toFixed(2)}`;
-      }
+      const shipping = review.querySelector('.bundle-review__shipping');
+
+      Object.keys(groups).forEach((step) => {
+        const section = document.createElement('div');
+
+        section.className = 'bundle-review__section bundle-review__dynamic';
+
+        section.innerHTML = `<p class="bundle-review__title">${step.replace(/choose your/i, '').toUpperCase()}</p>`;
+
+        groups[step].forEach((item) => {
+          const row = document.createElement('div');
+
+          row.className = 'bundle-review__item';
+
+          row.innerHTML = `
+<span>${item.title}</span>
+
+<div class="bundle-review__qty">
+<button data-review-minus="${item.key}">-</button>
+<span>${item.qty}</span>
+<button data-review-plus="${item.key}">+</button>
+</div>
+
+<span>$${(item.qty * item.price).toFixed(2)}</span>
+`;
+
+          section.appendChild(row);
+        });
+
+        review.insertBefore(section, shipping);
+      });
+
+      this.querySelector('[data-total-price]').textContent = `$${total.toFixed(2)}`;
     }
 
     initReviewButtons() {
       this.addEventListener('click', (e) => {
         if (e.target.dataset.reviewPlus) {
-          const key = e.target.dataset.reviewPlus;
-          this.state[key]++;
+          this.state[e.target.dataset.reviewPlus]++;
         }
 
         if (e.target.dataset.reviewMinus) {
-          const key = e.target.dataset.reviewMinus;
-          if (this.state[key] > 0) {
-            this.state[key]--;
+          if (this.state[e.target.dataset.reviewMinus] > 0) {
+            this.state[e.target.dataset.reviewMinus]--;
           }
         }
 
         this.refreshUI();
       });
     }
+
     refreshUI() {
       this.querySelectorAll('.bundle-steps__product-card').forEach((card) => {
-        this.updateVariantHighlight(card);
-        this.updateCounter(card);
+        const variantId = card.dataset.variantId || card.dataset.defaultVariant;
+
+        const key = this.getStateKey(card, variantId);
+
+        const qty = this.state[key] || 0;
+
+        card.querySelector('.bundle-steps__qty-value').textContent = qty;
       });
 
       this.updateReview();
@@ -856,48 +566,6 @@
 {% schema %}
 {
   "name": "Bundle steps builder",
-  "settings": [
-    {
-      "type": "range",
-      "id": "padding_top",
-      "label": "Padding top",
-      "min": 0,
-      "max": 120,
-      "step": 4,
-      "unit": "px",
-      "default": 40
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "label": "Padding bottom",
-      "min": 0,
-      "max": 120,
-      "step": 4,
-      "unit": "px",
-      "default": 40
-    },
-    {
-      "type": "range",
-      "id": "margin_top",
-      "label": "Margin top",
-      "min": 0,
-      "max": 120,
-      "step": 4,
-      "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "range",
-      "id": "margin_bottom",
-      "label": "Margin bottom",
-      "min": 0,
-      "max": 120,
-      "step": 4,
-      "unit": "px",
-      "default": 0
-    }
-  ],
   "blocks": [
     {
       "type": "step",
@@ -911,14 +579,8 @@
         {
           "type": "text",
           "id": "step_heading",
-          "label": "Step heading",
-          "default": "Choose your products"
-        },
-        {
-          "type": "text",
-          "id": "next_button_label",
-          "label": "Next button label",
-          "default": "Next step"
+          "default": "Choose your products",
+          "label": "Step heading"
         }
       ]
     }
