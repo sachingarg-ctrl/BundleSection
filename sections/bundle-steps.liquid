@@ -1,4 +1,5 @@
 {% stylesheet %}
+
   .bundle-steps {
     background:#f4f6fb;
   }
@@ -448,31 +449,11 @@
         {%- endif -%}
       </div>
 
-      <div class="bundle-steps__right">
-        <div class="bundle-review">
-          <div class="bundle-review__header">
-            <span class="bundle-review__label">REVIEW</span>
-            <h3>Your security system</h3>
-            <p>Review your personalized protection system designed to keep what matters most safe.</p>
-          </div>
-
-          <div class="bundle-review__items"></div>
-
-          <div class="bundle-review__footer">
-            <div class="bundle-review__total-row">
-              <span>Total</span>
-              <strong class="bundle-review__total-price">$0.00</strong>
-            </div>
-
-            <button class="bundle-review__checkout">Checkout</button>
-
-            <a class="bundle-review__save"> Save my system for later </a>
-          </div>
-        </div>
-      </div>
+      <div class="bundle-steps__right"></div>
     </div>
   </section>
 </bundle-steps>
+
 
 <script>
   class BundleSteps extends HTMLElement {
@@ -618,7 +599,9 @@
   }
 
   customElements.define('bundle-steps', BundleSteps);
-</script>
+</script> 
+
+
 
 {% schema %}
 {
@@ -698,3 +681,5 @@
   ]
 }
 {% endschema %}
+
+
