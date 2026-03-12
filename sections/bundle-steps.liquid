@@ -1,261 +1,363 @@
 {% stylesheet %}
+    .bundle-steps {
+      background:#f4f6fb;
+    }
 
-  .bundle-steps {
-    background:#f4f6fb;
-  }
+    .bundle-steps__inner {
+      max-width:1400px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:3fr 2fr;
+      gap:28px;
+    }
 
-  .bundle-steps__inner {
-    max-width:1400px;
-    margin:0 auto;
-    display:grid;
-    grid-template-columns:3fr 2fr;
-    gap:28px;
-  }
+    .bundle-steps__left {
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+    }
 
-  .bundle-steps__left {
-    display:flex;
-    flex-direction:column;
-    gap:18px;
-  }
+    .bundle-steps__accordion-list {
+      background:#fff;
+      border-radius:14px;
+      border:1px solid #e4e7f5;
+      padding:20px;
+    }
 
-  .bundle-steps__accordion-list {
-    background:#fff;
-    border-radius:14px;
-    border:1px solid #e4e7f5;
-    padding:20px;
-  }
+    .bundle-steps__accordion-step-label {
+      font-size:11px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:#a0aac6;
+      font-weight:600;
+      margin-bottom:8px;
+    }
 
-  .bundle-steps__accordion-step-label {
-    font-size:11px;
-    letter-spacing:.12em;
-    text-transform:uppercase;
-    color:#a0aac6;
-    font-weight:600;
-    margin-bottom:8px;
-  }
+    .bundle-steps__accordion-item {
+      border-top:1px solid #e4e7f5;
+      border-bottom:1px solid #e4e7f5;
+      overflow:hidden;
+      margin-bottom:14px;
+      background:#fff;
+    }
 
-  .bundle-steps__accordion-item {
-    border-top:1px solid #e4e7f5;
-    border-bottom:1px solid #e4e7f5;
-    overflow:hidden;
-    margin-bottom:14px;
-    background:#fff;
-  }
+    .bundle-steps__accordion-header {
+      padding:16px 18px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      cursor:pointer;
+    }
 
-  .bundle-steps__accordion-header {
-    padding:16px 18px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    cursor:pointer;
-  }
+    .bundle-steps__accordion-header::-webkit-details-marker {
+      display:none;
+    }
 
-  .bundle-steps__accordion-header::-webkit-details-marker {
-    display:none;
-  }
+    .bundle-steps__accordion-title {
+      font-size:18px;
+      font-weight:700;
+      color:#111;
+    }
 
-  .bundle-steps__accordion-title {
-    font-size:18px;
-    font-weight:700;
-    color:#111;
-  }
+    .bundle-steps__accordion-right {
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color:#3657ff;
+      font-weight:600;
+    }
 
-  .bundle-steps__accordion-right {
-    display:flex;
-    align-items:center;
-    gap:10px;
-    color:#3657ff;
-    font-weight:600;
-  }
+    .bundle-steps__selected-count {
+      display:none;
+      font-size:14px;
+    }
 
-  .bundle-steps__selected-count {
-    display:none;
-    font-size:14px;
-  }
+    .bundle-steps__accordion-chevron {
+      transition:transform .3s ease;
+      font-size:18px;
+    }
 
-  .bundle-steps__accordion-chevron {
-    transition:transform .3s ease;
-    font-size:18px;
-  }
+    .bundle-steps__accordion-item[open] .bundle-steps__accordion-chevron {
+      transform:rotate(180deg);
+    }
 
-  .bundle-steps__accordion-item[open] .bundle-steps__accordion-chevron {
-    transform:rotate(180deg);
-  }
+    .bundle-steps__accordion-item[open] .bundle-steps__selected-count {
+      display:inline-flex;
+    }
 
-  .bundle-steps__accordion-item[open] .bundle-steps__selected-count {
-    display:inline-flex;
-  }
+    .bundle-steps__products-panel {
+      background:#f5f7ff;
+      padding:22px;
+      display:flex;
+      flex-direction:column;
+      gap:24px;
+    }
 
-  .bundle-steps__products-panel {
-    background:#f5f7ff;
-    padding:22px;
-    display:flex;
-    flex-direction:column;
-    gap:24px;
-  }
+    .bundle-steps__products-grid {
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:20px;
+    }
 
-  .bundle-steps__products-grid {
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:20px;
-  }
+    .bundle-steps__product-card {
+      background:#fff;
+      border-radius:16px;
+      padding:8px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      transition:.25s;
+      box-shadow:0 2px 6px rgba(0,0,0,.05);
+      justify-content:space-evenly;
+    }
 
-  .bundle-steps__product-card {
-    background:#fff;
+    .bundle-steps__product-card:hover {
+      box-shadow:0 6px 16px rgba(54,87,255,.2);
+      transform:translateY(-2px);
+    }
+
+    .bundle-steps__product-media {
+      height:140px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .bundle-steps__product-image {
+      height:100%;
+      width:100%;
+      object-fit:contain;
+    }
+
+    .bundle-steps__product-title {
+      font-size:14px;
+      font-weight:600;
+      color:#111;
+      margin-bottom:5px;
+    }
+
+    .bundle-steps__product-description {
+      font-size:12px;
+      color:#7b88a8;
+      line-height:1.4;
+      min-height:34px;
+      margin-bottom:4px;
+    }
+
+    .bundle-steps__product-options {
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .bundle-steps__swatch {
+      display:flex;
+      align-items:center;
+      gap:6px;
+      padding:3px 5px;
+      border:1px solid #dbe1f3;
+      border-radius:6px;
+      background:#fff;
+      cursor:pointer;
+      font-size:12px;
+    }
+
+    .bundle-steps__swatch-img {
+      width:16px;
+      height:16px;
+    }
+
+    .bundle-steps__swatch:hover {
+      border-color:#3657ff;
+    }
+
+    .bundle-steps__product-footer {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-top:8px;
+    }
+
+    .bundle-steps__qty-control {
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+    }
+
+    .bundle-steps__qty-btn {
+      width:18px;
+      height:18px;
+      border-radius:6px;
+      border:1px solid #dbe1f3;
+      background:#fff;
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    .bundle-steps__qty-value {
+      font-size:14px;
+      font-weight:600;
+      text-align:center;
+    }
+
+    .bundle-steps__price {
+      text-align:right;
+    }
+
+    .bundle-steps__compare-at {
+      font-size:11px;
+      text-decoration:line-through;
+      color:#a0aac6;
+      margin-right:4px;
+    }
+
+    .bundle-steps__final-price {
+      font-weight:700;
+      color:#3657ff;
+    }
+
+    .bundle-steps__card_footer {
+      display:flex;
+      justify-content:center;
+    }
+
+    .bundle-steps__primary-btn {
+      border-radius:999px;
+      border:1px solid #b8c2ff;
+      background:#f5f7ff;
+      color:#3657ff;
+      padding:10px 24px;
+      font-weight:700;
+      cursor:pointer;
+      transition:.25s;
+    }
+
+    .bundle-steps__primary-btn:hover {
+      background:#e0e6ff;
+    }
+
+    .bundle-steps__card-footer {
+      text-align:center;
+    }
+
+    .bundle-steps__swatch.is-selected {
+      border-color: #0AA288;
+      background: #1DF0BB0A;
+    }
+    .bundle-review{
+    background:#eef2fb;
     border-radius:16px;
-    padding:8px;
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-    transition:.25s;
-    box-shadow:0 2px 6px rgba(0,0,0,.05);
-    justify-content:space-evenly;
+    padding:22px;
+    position:sticky;
+    top:40px;
   }
 
-  .bundle-steps__product-card:hover {
-    box-shadow:0 6px 16px rgba(54,87,255,.2);
-    transform:translateY(-2px);
-  }
-
-  .bundle-steps__product-media {
-    height:140px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-  }
-
-  .bundle-steps__product-image {
-    height:100%;
-    width:100%;
-    object-fit:contain;
-  }
-
-  .bundle-steps__product-title {
-    font-size:14px;
+  .bundle-review__label{
+    font-size:11px;
+    letter-spacing:.1em;
+    color:#94a0c3;
     font-weight:600;
-    color:#111;
-    margin-bottom:5px;
   }
 
-  .bundle-steps__product-description {
-    font-size:12px;
+  .bundle-review h3{
+    margin:6px 0;
+    font-size:18px;
+  }
+
+  .bundle-review__desc{
+    font-size:13px;
     color:#7b88a8;
-    line-height:1.4;
-    min-height:34px;
-    margin-bottom:4px;
+    margin-bottom:16px;
   }
 
-  .bundle-steps__product-options {
-    display:flex;
-    gap:8px;
-    flex-wrap:wrap;
+  .bundle-review__section{
+    margin-bottom:16px;
   }
 
-  .bundle-steps__swatch {
-    display:flex;
-    align-items:center;
-    gap:6px;
-    padding:3px 5px;
-    border:1px solid #dbe1f3;
-    border-radius:6px;
-    background:#fff;
-    cursor:pointer;
-    font-size:12px;
+  .bundle-review__title{
+    font-size:11px;
+    font-weight:700;
+    color:#a0aac6;
+    margin-bottom:6px;
   }
 
-  .bundle-steps__swatch-img {
-    width:16px;
-    height:16px;
-  }
-
-  .bundle-steps__swatch:hover {
-    border-color:#3657ff;
-  }
-
-  .bundle-steps__product-footer {
+  .bundle-review__item{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    margin-top:8px;
+    padding:6px 0;
+    font-size:14px;
   }
 
-  .bundle-steps__qty-control {
+  .bundle-review__qty{
     display:flex;
-    align-items:center;
-    justify-content:center;
     gap:6px;
+    align-items:center;
   }
 
-  .bundle-steps__qty-btn {
-    width:18px;
-    height:18px;
+  .bundle-review__qty button{
+    width:20px;
+    height:20px;
     border-radius:6px;
     border:1px solid #dbe1f3;
     background:#fff;
-    font-weight:700;
     cursor:pointer;
   }
 
-  .bundle-steps__qty-value {
-    font-size:14px;
-    font-weight:600;
-    text-align:center;
-  }
-
-  .bundle-steps__price {
-    text-align:right;
-  }
-
-  .bundle-steps__compare-at {
-    font-size:11px;
-    text-decoration:line-through;
-    color:#a0aac6;
-    margin-right:4px;
-  }
-
-  .bundle-steps__final-price {
-    font-weight:700;
-    color:#3657ff;
-  }
-
-  .bundle-steps__card_footer {
+  .bundle-review__static{
     display:flex;
-    justify-content:center;
+    justify-content:space-between;
+    font-size:14px;
+    padding:4px 0;
   }
 
-  .bundle-steps__primary-btn {
-    border-radius:999px;
-    border:1px solid #b8c2ff;
-    background:#f5f7ff;
+  .bundle-review__shipping{
+    display:flex;
+    justify-content:space-between;
+    padding:10px 0;
+    border-top:1px solid #e4e7f5;
+  }
+
+  .bundle-review__total{
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+    margin-top:10px;
+  }
+
+  .bundle-review__old{
+    text-decoration:line-through;
+    color:#9aa4c4;
+  }
+
+  .bundle-review__price{
+    font-size:22px;
+    font-weight:700;
     color:#3657ff;
-    padding:10px 24px;
+  }
+
+  .bundle-review__checkout{
+    width:100%;
+    margin-top:16px;
+    background:#5c4cf4;
+    color:#fff;
+    border:none;
+    border-radius:10px;
+    padding:14px;
     font-weight:700;
     cursor:pointer;
-    transition:.25s;
   }
 
-  .bundle-steps__primary-btn:hover {
-    background:#e0e6ff;
-  }
+    @media(max-width:1024px){
+      .bundle-steps__inner{
+        grid-template-columns:1fr;
+      }
 
-  .bundle-steps__card-footer {
-    text-align:center;
-  }
-
-  .bundle-steps__swatch.is-selected {
-    border-color: #0AA288;
-    background: #1DF0BB0A;
-  }
-
-  @media(max-width:1024px){
-    .bundle-steps__inner{
-      grid-template-columns:1fr;
+      .bundle-steps__products-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
     }
-
-    .bundle-steps__products-grid{
-      grid-template-columns:repeat(2,1fr);
-    }
-  }
 {% endstylesheet %}
 
 <bundle-steps>
@@ -449,11 +551,66 @@
         {%- endif -%}
       </div>
 
-      <div class="bundle-steps__right"></div>
+      <div class="bundle-steps__right">
+        <div class="bundle-review">
+          <div class="bundle-review__header">
+            <p class="bundle-review__label">REVIEW</p>
+            <h3>Your security system</h3>
+            <p class="bundle-review__desc">
+              Review your personalized protection system designed to keep what matters most safe.
+            </p>
+          </div>
+
+          <div class="bundle-review__section">
+            <p class="bundle-review__title">CAMERAS</p>
+            <div class="bundle-review__list" data-review-group="cameras"></div>
+          </div>
+
+          <div class="bundle-review__section">
+            <p class="bundle-review__title">SENSORS</p>
+
+            <div class="bundle-review__static">
+              Wyze Sense Motion Sensor
+              <span>$59.98</span>
+            </div>
+
+            <div class="bundle-review__static">
+              Wyze Sense Hub (Required)
+              <span>FREE</span>
+            </div>
+          </div>
+
+          <div class="bundle-review__section">
+            <p class="bundle-review__title">ACCESSORIES</p>
+
+            <div class="bundle-review__static">
+              Wyze MicroSD Card (256GB)
+              <span>$41.96</span>
+            </div>
+          </div>
+
+          <div class="bundle-review__section">
+            <p class="bundle-review__title">PLAN</p>
+
+            <div class="bundle-review__static">
+              Cam Unlimited
+              <span>$9.99/mo</span>
+            </div>
+          </div>
+
+          <div class="bundle-review__shipping">Fast Shipping <span>FREE</span></div>
+
+          <div class="bundle-review__total">
+            <div class="bundle-review__old">$238.81</div>
+            <div class="bundle-review__price" data-total-price>$0.00</div>
+          </div>
+
+          <button class="bundle-review__checkout">Checkout</button>
+        </div>
+      </div>
     </div>
   </section>
 </bundle-steps>
-
 
 <script>
   class BundleSteps extends HTMLElement {
@@ -466,6 +623,8 @@
       this.initSwatches();
       this.initQuantity();
       this.initNextButtons();
+      this.initReviewButtons();
+      this.updateReview();
     }
 
     getStepId(card) {
@@ -596,12 +755,86 @@
         });
       });
     }
+
+    updateReview() {
+      const container = this.querySelector('[data-review-group="cameras"]');
+
+      if (!container) return;
+
+      container.innerHTML = '';
+
+      let total = 0;
+
+      Object.keys(this.state).forEach((key) => {
+        const qty = this.state[key];
+        if (qty <= 0) return;
+
+        const parts = key.split('-');
+        const productId = parts[1];
+        const variantId = parts[2];
+
+        const card = this.querySelector(`[data-product-id="${productId}"]`);
+        if (!card) return;
+
+        const title = card.querySelector('.bundle-steps__product-title').textContent;
+        const priceText = card.querySelector('.bundle-steps__final-price').textContent;
+        const price = parseFloat(priceText.replace(/[^0-9.]/g, ''));
+
+        total += price * qty;
+
+        const item = document.createElement('div');
+        item.className = 'bundle-review__item';
+
+        item.innerHTML = `
+      <span>${title}</span>
+
+      <div class="bundle-review__qty">
+        <button data-review-minus="${key}">-</button>
+        <span>${qty}</span>
+        <button data-review-plus="${key}">+</button>
+      </div>
+
+      <span>$${(price * qty).toFixed(2)}</span>
+    `;
+
+        container.appendChild(item);
+      });
+
+      const totalEl = this.querySelector('[data-total-price]');
+      if (totalEl) {
+        totalEl.textContent = `$${total.toFixed(2)}`;
+      }
+    }
+
+    initReviewButtons() {
+      this.addEventListener('click', (e) => {
+        if (e.target.dataset.reviewPlus) {
+          const key = e.target.dataset.reviewPlus;
+          this.state[key]++;
+        }
+
+        if (e.target.dataset.reviewMinus) {
+          const key = e.target.dataset.reviewMinus;
+          if (this.state[key] > 0) {
+            this.state[key]--;
+          }
+        }
+
+        this.refreshUI();
+      });
+    }
+    refreshUI() {
+      this.querySelectorAll('.bundle-steps__product-card').forEach((card) => {
+        this.updateVariantHighlight(card);
+        this.updateCounter(card);
+      });
+
+      this.updateReview();
+    }
   }
 
   customElements.define('bundle-steps', BundleSteps);
-</script> 
-
-
+</script>
 
 {% schema %}
 {
@@ -681,5 +914,3 @@
   ]
 }
 {% endschema %}
-
-
