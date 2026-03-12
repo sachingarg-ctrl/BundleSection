@@ -420,8 +420,10 @@
                         <div class="bundle-steps__products-grid">
                           {%- for product in step_collection.products limit: 5 -%}
                             <div
+                              <div
                               class="bundle-steps__product-card"
                               data-product-id="{{ product.id }}"
+                              data-step-title="{{ block.settings.step_heading }}"
                               data-default-variant="{{ product.first_available_variant.id }}"
                               data-has-variants="{% if product.variants.size > 1 %}true{% else %}false{% endif %}"
                             >
@@ -559,11 +561,6 @@
             <p class="bundle-review__desc">
               Review your personalized protection system designed to keep what matters most safe.
             </p>
-          </div>
-
-          <div class="bundle-review__section">
-            <p class="bundle-review__title">CAMERAS</p>
-            <div class="bundle-review__list" data-review-group="cameras"></div>
           </div>
 
           <div class="bundle-review__section">
@@ -757,46 +754,97 @@
       });
     }
 
-    updateReview() {
-      const container = this.querySelector('[data-review-group="cameras"]');
+   updateReview() {
 
-      if (!container) return;
+  const reviewContainer = this.querySelector('.bundle-review');
+  if (!reviewContainer) return;
 
-      container.innerHTML = '';
+  // remove old dynamic groups
+  reviewContainer.querySelectorAll('.bundle-review__dynamic').forEach(el => el.remove());
 
-      let total = 0;
+  let groups = {};
+  let total = 0;
 
-      Object.keys(this.state).forEach((key) => {
-        const qty = this.state[key];
-        if (qty <= 0) return;
+  Object.keys(this.state).forEach(key => {
 
-        const parts = key.split('-');
-        const productId = parts[1];
-        const variantId = parts[2];
+    const qty = this.state[key];
+    if(qty <= 0) return;
 
-        const card = this.querySelector(`[data-product-id="${productId}"]`);
-        if (!card) return;
+    const parts = key.split('-');
+    const productId = parts[1];
 
-        const title = card.querySelector('.bundle-steps__product-title').textContent;
-        const priceText = card.querySelector('.bundle-steps__final-price').textContent;
-        const price = parseFloat(priceText.replace(/[^0-9.]/g, ''));
+    const card = this.querySelector(`[data-product-id="${productId}"]`);
+    if(!card) return;
 
-        total += price * qty;
+    const stepTitle = card.dataset.stepTitle || "Products";
 
-        const item = document.createElement('div');
-        item.className = 'bundle-review__item';
+    const title = card.querySelector('.bundle-steps__product-title').textContent;
+    const priceText = card.querySelector('.bundle-steps__final-price').textContent;
+    const price = parseFloat(priceText.replace(/[^0-9.]/g,''));
 
-        item.innerHTML = `
-      <span>${title}</span>
+    const itemTotal = price * qty;
+    total += itemTotal;
 
-      <div class="bundle-review__qty">
-        <button data-review-minus="${key}">-</button>
-        <span>${qty}</span>
-        <button data-review-plus="${key}">+</button>
-      </div>
+    if(!groups[stepTitle]){
+      groups[stepTitle] = [];
+    }
 
-      <span>$${(price * qty).toFixed(2)}</span>
-    `;
+    groups[stepTitle].push({
+      key,
+      title,
+      qty,
+      price,
+      total:itemTotal
+    });
+
+  });
+
+  const shippingSection = reviewContainer.querySelector('.bundle-review__shipping');
+
+  Object.keys(groups).forEach(stepTitle => {
+
+    const section = document.createElement('div');
+    section.className = "bundle-review__section bundle-review__dynamic";
+
+    const title = document.createElement('p');
+    title.className = "bundle-review__title";
+
+    // convert "Choose your cameras" -> "CAMERAS"
+    title.textContent = stepTitle.replace(/choose your/i,'').trim().toUpperCase();
+
+    section.appendChild(title);
+
+    groups[stepTitle].forEach(item => {
+
+      const row = document.createElement('div');
+      row.className = "bundle-review__item";
+
+      row.innerHTML = `
+        <span>${item.title}</span>
+
+        <div class="bundle-review__qty">
+          <button data-review-minus="${item.key}">-</button>
+          <span>${item.qty}</span>
+          <button data-review-plus="${item.key}">+</button>
+        </div>
+
+        <span>$${item.total.toFixed(2)}</span>
+      `;
+
+      section.appendChild(row);
+
+    });
+
+    reviewContainer.insertBefore(section, shippingSection);
+
+  });
+
+  const totalEl = this.querySelector('[data-total-price]');
+  if(totalEl){
+    totalEl.textContent = `$${total.toFixed(2)}`;
+  }
+
+}
 
         container.appendChild(item);
       });
